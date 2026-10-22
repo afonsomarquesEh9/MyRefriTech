@@ -26,6 +26,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.afonsomarques.myrefritech.ui.theme.MyRefriTechTheme
+import com.afonsomarques.myrefritech.screens.HomeScreen
+import com.afonsomarques.myrefritech.screens.SymptomScreen
+import com.afonsomarques.myrefritech.screens.DiagnosisScreen
+import android.net.Uri
 
 class MainActivity : ComponentActivity() {
 
@@ -56,6 +60,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
+
                         composable("equipment") {
                             EquipmentScreen(
                                 onBackClick = {
@@ -63,29 +68,71 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onEquipmentSelected = { equipment ->
                                     when (equipment) {
-                                        "Sistema Rack" -> {
+                                        "Sistema Rack" ->
                                             navController.navigate("rack")
-                                        }
 
-                                        "Expositor horizontal",
-                                        "Expositor vertical",
-                                        "Expositor de congelados",
-                                        "Câmara fria" -> {
-                                            navController.navigate("refrigeration/$equipment")
-                                        }
+                                        "Balcão expositor horizontal",
+                                        "Balcão expositor vertical",
+                                        "Balcão expositor de congelados" ->
+                                            navController.navigate("symptoms/$equipment")
 
-                                        else -> {
+                                        "Câmara fria" ->
+                                            navController.navigate("refrigeration/${Uri.encode(equipment)}")
+
+                                        else ->
                                             navController.navigate("unavailable")
-                                        }
                                     }
                                 }
                             )
                         }
 
+
                         composable("rack") {
                             SimpleInfoScreen(
                                 title = "Sistema Rack",
-                                description = "Diagnóstico do sistema de refrigeração Rack.",
+                                description = "A investigação técnica do Sistema Rack será implementada em uma etapa futura.",
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+
+
+                        composable("symptoms/{equipment}") { backStackEntry ->
+
+                            val equipment = backStackEntry.arguments
+                                ?.getString("equipment")
+                                ?: "Equipamento não informado"
+
+                            SymptomScreen(
+                                equipment = equipment,
+                                onBackClick = {
+                                    navController.popBackStack()
+                                },
+                                onSymptomSelected = { symptom ->
+
+                                    navController.currentBackStackEntry
+                                        ?.savedStateHandle
+                                        ?.set("selected_symptom", symptom)
+
+                                    navController.currentBackStackEntry
+                                        ?.savedStateHandle
+                                        ?.set("selected_equipment", equipment)
+
+                                    navController.navigate("diagnosis")
+                                }
+                            )
+                        }
+
+
+                        composable("diagnosis") {
+                            val symptom = navController.previousBackStackEntry
+                                ?.savedStateHandle
+                                ?.get<String>("selected_symptom")
+                                ?: "Sintoma não informado"
+
+                            DiagnosisScreen(
+                                symptom = symptom,
                                 onBackClick = {
                                     navController.popBackStack()
                                 }
@@ -93,16 +140,16 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("refrigeration/{equipment}") { backStackEntry ->
-                            val equipment = backStackEntry.arguments?.getString("equipment")
-                                ?: "Equipamento"
 
-                            RefrigerationScreen(
-                                equipment = equipment,
+                            val equipment = backStackEntry.arguments
+                                ?.getString("equipment")
+                                ?: "Equipamento não informado"
+
+                            SimpleInfoScreen(
+                                title = equipment,
+                                description = "A investigação técnica deste equipamento será implementada em uma etapa futura.",
                                 onBackClick = {
                                     navController.popBackStack()
-                                },
-                                onSelfUnavailableClick = {
-                                    navController.navigate("unavailable")
                                 }
                             )
                         }
@@ -125,65 +172,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun HomeScreen(
-    onDiagnosticClick: () -> Unit
-) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        Text(
-            text = "MyRefriTech",
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "Assistente Técnico de Refrigeração Comercial",
-            fontSize = 16.sp,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
-            text = "Apoio técnico para investigação de falhas " +
-                    "em sistemas de refrigeração comercial.",
-            fontSize = 14.sp,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Button(
-            onClick = onDiagnosticClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Diagnóstico guiado")
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Button(
-            onClick = {
-                // Implementaremos a biblioteca posteriormente.
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Biblioteca técnica")
-        }
-    }
-}
 
 @Composable
 fun EquipmentScreen(
@@ -211,11 +199,11 @@ fun EquipmentScreen(
 
         EquipmentButton("Sistema Rack", onEquipmentSelected)
 
-        EquipmentButton("Expositor horizontal", onEquipmentSelected)
+        EquipmentButton("Balcão expositor horizontal", onEquipmentSelected)
 
-        EquipmentButton("Expositor vertical", onEquipmentSelected)
+        EquipmentButton("Balcão expositor vertical", onEquipmentSelected)
 
-        EquipmentButton("Expositor de congelados", onEquipmentSelected)
+        EquipmentButton("Balcão expositor de congelados", onEquipmentSelected)
 
         EquipmentButton("Câmara fria", onEquipmentSelected)
 
