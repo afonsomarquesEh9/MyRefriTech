@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
                                         "Balcão expositor horizontal",
                                         "Balcão expositor vertical",
                                         "Balcão expositor de congelados" ->
-                                            navController.navigate("symptoms/$equipment")
+                                            navController.navigate("symptoms/${Uri.encode(equipment)}")
 
                                         "Câmara fria" ->
                                             navController.navigate("refrigeration/${Uri.encode(equipment)}")
@@ -98,6 +98,21 @@ class MainActivity : ComponentActivity() {
                         }
 
 
+                        composable("refrigeration/{equipment}") { backStackEntry ->
+
+                            val equipment = backStackEntry.arguments?.getString("equipment")
+                                ?: "Equipamento não informado"
+
+                            SimpleInfoScreen(
+                                title = equipment,
+                                description = "A investigação técnica deste equipamento será implementada em uma etapa futura.",
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+
+
                         composable("symptoms/{equipment}") { backStackEntry ->
 
                             val equipment = backStackEntry.arguments
@@ -111,13 +126,13 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onSymptomSelected = { symptom ->
 
-                                    navController.currentBackStackEntry
-                                        ?.savedStateHandle
-                                        ?.set("selected_symptom", symptom)
+                                    navController.getBackStackEntry("symptoms/{equipment}")
+                                        .savedStateHandle
+                                        .set("selected_symptom", symptom)
 
-                                    navController.currentBackStackEntry
-                                        ?.savedStateHandle
-                                        ?.set("selected_equipment", equipment)
+                                    navController.getBackStackEntry("symptoms/{equipment}")
+                                        .savedStateHandle
+                                        .set("selected_equipment", equipment)
 
                                     navController.navigate("diagnosis")
                                 }
@@ -126,9 +141,9 @@ class MainActivity : ComponentActivity() {
 
 
                         composable("diagnosis") {
-                            val symptom = navController.previousBackStackEntry
-                                ?.savedStateHandle
-                                ?.get<String>("selected_symptom")
+                            val symptom = navController.getBackStackEntry("symptoms/{equipment}")
+                                .savedStateHandle
+                                .get<String>("selected_symptom")
                                 ?: "Sintoma não informado"
 
                             DiagnosisScreen(
@@ -139,27 +154,12 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable("refrigeration/{equipment}") { backStackEntry ->
-
-                            val equipment = backStackEntry.arguments
-                                ?.getString("equipment")
-                                ?: "Equipamento não informado"
-
-                            SimpleInfoScreen(
-                                title = equipment,
-                                description = "A investigação técnica deste equipamento será implementada em uma etapa futura.",
-                                onBackClick = {
-                                    navController.popBackStack()
-                                }
-                            )
-                        }
 
                         composable("unavailable") {
                             SimpleInfoScreen(
                                 title = "Opção indisponível",
-                                description = "O sistema Self ainda não está disponível " +
-                                        "nesta versão do MyRefriTech. " +
-                                        "Essa funcionalidade poderá ser incluída futuramente.",
+                                description = "Diferentes tipos de equipamentos "+
+                                "ainda não estão disponíveis nessa versão do MyRefriTech",
                                 onBackClick = {
                                     navController.popBackStack()
                                 }

@@ -25,11 +25,11 @@ fun SymptomScreen(
     onSymptomSelected: (String) -> Unit
 ) {
     val symptoms = listOf(
-        "Ausência de ventilação ou baixo fluxo de ar",
+        "Ausência de ventilação ou baixa vazão de ar",
         "Temperatura de insuflamento elevada",
-        "Evaporador congelando ou obstruído",
+        "Congelamento/bloqueio do evaporador ou obstrução da passagem do ar",
         "Refrigeração com baixo rendimento",
-        "Temperatura oscilando",
+        "Temperatura de insuflamento oscilando",
         "Disjuntor desarmando intermitentemente",
         "Alarme no controlador eletrônico"
     )
