@@ -30,6 +30,7 @@ import com.afonsomarques.myrefritech.screens.HomeScreen
 import com.afonsomarques.myrefritech.screens.SymptomScreen
 import com.afonsomarques.myrefritech.screens.DiagnosisScreen
 import android.net.Uri
+import com.afonsomarques.myrefritech.screens.InvestigationScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -148,6 +149,42 @@ class MainActivity : ComponentActivity() {
 
                             DiagnosisScreen(
                                 symptom = symptom,
+                                onBackClick = {
+                                    navController.popBackStack()
+                                },
+                                onCauseSelected = { cause ->
+                                    navController.currentBackStackEntry
+                                        ?.savedStateHandle
+                                        ?.set("selected_cause", cause)
+
+                                    navController.navigate("investigation")
+                                },
+                                onFullScanClick = {
+                                    navController.navigate("full_scan")
+                                }
+                            )
+                        }
+
+                        composable("investigation") {
+
+                            val cause = navController.getBackStackEntry("diagnosis")
+                                .savedStateHandle
+                                .get<String>("selected_cause")
+                                ?: "Causa não informada"
+
+                            InvestigationScreen(
+                                cause = cause,
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+
+
+                        composable("full_scan") {
+                            SimpleInfoScreen(
+                                title = "Varredura Técnica Completa",
+                                description = "A sequência completa de verificações técnicas será implementada em uma próxima etapa.",
                                 onBackClick = {
                                     navController.popBackStack()
                                 }
