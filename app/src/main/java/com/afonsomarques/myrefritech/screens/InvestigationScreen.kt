@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.sp
 import com.afonsomarques.myrefritech.generalPowerChecks
 import com.afonsomarques.myrefritech.motorsInoperativeInvestigation
 import com.afonsomarques.myrefritech.partialFailureQuestion
+import com.afonsomarques.myrefritech.individualMotorChecks
+import com.afonsomarques.myrefritech.evaporatorIceChecks
+import com.afonsomarques.myrefritech.airflowObstructionChecks
 
 @Composable
 fun InvestigationScreen(
@@ -25,11 +28,25 @@ fun InvestigationScreen(
     onBackClick: () -> Unit
 ) {
     var currentStep by remember {
-        mutableStateOf("INITIAL_QUESTION")
+        mutableStateOf(
+            when (cause) {
+                "Evaporador com excesso de gelo" ->
+                    "EVAPORATOR_ICE_CHECK"
+
+                "Colméias/grelhas de insuflamento obstruídas" ->
+                    "AIRFLOW_OBSTRUCTION_CHECK"
+
+                else -> "INITIAL_QUESTION"
+            }
+        )
     }
 
 
     val checkResults = remember {
+        mutableStateMapOf<Int, String>()
+    }
+
+    val individualCheckResults = remember {
         mutableStateMapOf<Int, String>()
     }
 
@@ -123,6 +140,216 @@ fun InvestigationScreen(
                             .padding(vertical = 5.dp)
                     ) {
                         Text(answer)
+                    }
+                }
+            }
+
+            "AIRFLOW_OBSTRUCTION_CHECK" -> {
+
+                Text(
+                    text = "Verificação das colmeias e grelhas de insuflamento",
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    itemsIndexed(airflowObstructionChecks) { index, check ->
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xFFF1F3F5)
+                            ),
+                            border = BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outlineVariant
+                            )
+                        ) {
+
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+
+                                Text(
+                                    text = "${index + 1}. ${check.title}",
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    text = check.description,
+                                    fontSize = 14.sp
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                Text(
+                                    text = "Resultado da verificação:",
+                                    fontWeight = FontWeight.SemiBold
+                                )
+
+                                listOf(
+                                    "Normal",
+                                    "Anormalidade encontrada",
+                                    "Não verificado"
+                                ).forEach { status ->
+
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                checkResults[index] = status
+                                            }
+                                            .padding(vertical = 5.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+
+                                        RadioButton(
+                                            selected = checkResults[index] == status,
+                                            onClick = {
+                                                checkResults[index] = status
+                                            }
+                                        )
+
+                                        Text(
+                                            text = status,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "AIRFLOW_OBSTRUCTION_SUMMARY"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Concluir verificações")
+                        }
+                    }
+                }
+            }
+
+            "EVAPORATOR_ICE_CHECK" -> {
+
+                Text(
+                    text = "Verificação do evaporador com excesso de gelo",
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    itemsIndexed(evaporatorIceChecks) { index, check ->
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xFFF1F3F5)
+                            ),
+                            border = BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outlineVariant
+                            )
+                        ) {
+
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+
+                                Text(
+                                    text = "${index + 1}. ${check.title}",
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    text = check.description,
+                                    fontSize = 14.sp
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                Text(
+                                    text = "Resultado da verificação:",
+                                    fontWeight = FontWeight.SemiBold
+                                )
+
+                                listOf(
+                                    "Normal",
+                                    "Anormalidade encontrada",
+                                    "Não verificado"
+                                ).forEach { status ->
+
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                checkResults[index] = status
+                                            }
+                                            .padding(vertical = 5.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+
+                                        RadioButton(
+                                            selected = checkResults[index] == status,
+                                            onClick = {
+                                                checkResults[index] = status
+                                            }
+                                        )
+
+                                        Text(
+                                            text = status,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "EVAPORATOR_ICE_SUMMARY"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Concluir verificações")
+                        }
                     }
                 }
             }
@@ -388,9 +615,530 @@ fun InvestigationScreen(
 
                 Text(
                     text = "Verificação individual dos micromotores",
-                    fontSize = 18.sp,
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    itemsIndexed(individualMotorChecks) { index, check ->
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xFFF1F3F5)
+                            ),
+                            border = BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outlineVariant
+                            )
+                        ) {
+
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+
+                                Text(
+                                    text = "${index + 1}. ${check.title}",
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    text = check.description,
+                                    fontSize = 14.sp
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                Text(
+                                    text = "Resultado da verificação:",
+                                    fontWeight = FontWeight.SemiBold
+                                )
+
+                                listOf(
+                                    "Normal",
+                                    "Anormalidade encontrada",
+                                    "Não verificado"
+                                ).forEach { status ->
+
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                individualCheckResults[index] = status
+                                            }
+                                            .padding(vertical = 5.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+
+                                        RadioButton(
+                                            selected = individualCheckResults[index] == status,
+                                            onClick = {
+                                                individualCheckResults[index] = status
+                                            }
+                                        )
+
+                                        Text(
+                                            text = status,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "INDIVIDUAL_MOTOR_SUMMARY"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Concluir verificações")
+                        }
+                    }
+                }
+            }
+
+            "AIRFLOW_OBSTRUCTION_SUMMARY" -> {
+
+                val normalCount = checkResults.values.count {
+                    it == "Normal"
+                }
+
+                val abnormalCount = checkResults.values.count {
+                    it == "Anormalidade encontrada"
+                }
+
+                val pendingCount = airflowObstructionChecks.size -
+                        normalCount - abnormalCount
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    item {
+
+                        Text(
+                            text = "Resumo da investigação",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text("Verificações normais: $normalCount")
+                        Text("Anormalidades encontradas: $abnormalCount")
+                        Text("Não verificadas: $pendingCount")
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Detalhamento dos resultados",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    itemsIndexed(airflowObstructionChecks) { index, check ->
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp)
+                        ) {
+
+                            Text(
+                                text = check.title,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Text(
+                                text = checkResults[index] ?: "Não verificado"
+                            )
+                        }
+
+                        HorizontalDivider()
+                    }
+
+                    item {
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = "Recomendações para as anormalidades",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    itemsIndexed(airflowObstructionChecks) { index, check ->
+
+                        if (checkResults[index] == "Anormalidade encontrada") {
+
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color(0xFFFFF3E0)
+                                )
+                            ) {
+
+                                Column(
+                                    modifier = Modifier.padding(16.dp)
+                                ) {
+
+                                    Text(
+                                        text = check.title,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp
+                                    )
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    check.recommendedActions.forEach { action ->
+
+                                        Text(
+                                            text = "• $action",
+                                            fontSize = 14.sp,
+                                            modifier = Modifier.padding(vertical = 3.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+
+                        if (abnormalCount == 0) {
+
+                            Text(
+                                text = "Nenhuma anormalidade foi registrada nas verificações realizadas. Isso não significa necessariamente que o equipamento esteja livre de falhas.",
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "AIRFLOW_OBSTRUCTION_CHECK"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Voltar às verificações")
+                        }
+                    }
+                }
+            }
+
+            "EVAPORATOR_ICE_SUMMARY" -> {
+
+                val normalCount = checkResults.values.count {
+                    it == "Normal"
+                }
+
+                val abnormalCount = checkResults.values.count {
+                    it == "Anormalidade encontrada"
+                }
+
+                val pendingCount = evaporatorIceChecks.size -
+                        normalCount - abnormalCount
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    item {
+
+                        Text(
+                            text = "Resumo da investigação",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text("Verificações normais: $normalCount")
+                        Text("Anormalidades encontradas: $abnormalCount")
+                        Text("Não verificadas: $pendingCount")
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Detalhamento dos resultados",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    itemsIndexed(evaporatorIceChecks) { index, check ->
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp)
+                        ) {
+
+                            Text(
+                                text = check.title,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Text(
+                                text = checkResults[index] ?: "Não verificado"
+                            )
+                        }
+
+                        HorizontalDivider()
+                    }
+
+                    item {
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = "Recomendações para as anormalidades",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    itemsIndexed(evaporatorIceChecks) { index, check ->
+
+                        if (checkResults[index] == "Anormalidade encontrada") {
+
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color(0xFFFFF3E0)
+                                )
+                            ) {
+
+                                Column(
+                                    modifier = Modifier.padding(16.dp)
+                                ) {
+
+                                    Text(
+                                        text = check.title,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp
+                                    )
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    check.recommendedActions.forEach { action ->
+
+                                        Text(
+                                            text = "• $action",
+                                            fontSize = 14.sp,
+                                            modifier = Modifier.padding(vertical = 3.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+
+                        if (abnormalCount == 0) {
+
+                            Text(
+                                text = "Nenhuma anormalidade foi registrada nas verificações realizadas. Isso não significa necessariamente que o equipamento esteja livre de falhas.",
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "EVAPORATOR_ICE_CHECK"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Voltar às verificações")
+                        }
+                    }
+                }
+            }
+
+            "INDIVIDUAL_MOTOR_SUMMARY" -> {
+
+                val normalCount = individualCheckResults.values.count {
+                    it == "Normal"
+                }
+
+                val abnormalCount = individualCheckResults.values.count {
+                    it == "Anormalidade encontrada"
+                }
+
+                val pendingCount = individualMotorChecks.size -
+                        normalCount - abnormalCount
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+
+                    item {
+
+                        Text(
+                            text = "Resumo da investigação individual",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = "Verificações normais: $normalCount",
+                            fontSize = 16.sp
+                        )
+
+                        Text(
+                            text = "Anormalidades encontradas: $abnormalCount",
+                            fontSize = 16.sp
+                        )
+
+                        Text(
+                            text = "Não verificadas: $pendingCount",
+                            fontSize = 16.sp
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Detalhamento dos resultados",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    itemsIndexed(individualMotorChecks) { index, check ->
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp)
+                        ) {
+
+                            Text(
+                                text = check.title,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Text(
+                                text = individualCheckResults[index] ?: "Não verificado"
+                            )
+                        }
+
+                        HorizontalDivider()
+                    }
+
+                    item {
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = "Recomendações para as anormalidades",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    itemsIndexed(individualMotorChecks) { index, check ->
+
+                        if (individualCheckResults[index] == "Anormalidade encontrada") {
+
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color(0xFFFFF3E0)
+                                )
+                            ) {
+
+                                Column(
+                                    modifier = Modifier.padding(16.dp)
+                                ) {
+
+                                    Text(
+                                        text = check.title,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp
+                                    )
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    check.recommendedActions.forEach { action ->
+
+                                        Text(
+                                            text = "• $action",
+                                            fontSize = 14.sp,
+                                            modifier = Modifier.padding(vertical = 3.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+
+                        if (abnormalCount == 0) {
+
+                            Text(
+                                text = "Nenhuma anormalidade foi registrada nas verificações realizadas. Isso não significa necessariamente que o equipamento esteja livre de falhas.",
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "INDIVIDUAL_MOTOR_CHECK"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Voltar às verificações")
+                        }
+                    }
+                }
             }
 
             "SUGGEST_LOW_ROTATION" -> {
@@ -405,7 +1153,14 @@ fun InvestigationScreen(
 
         if (
             currentStep != "GENERAL_POWER_CHECK" &&
-            currentStep != "INVESTIGATION_SUMMARY"
+            currentStep != "INDIVIDUAL_MOTOR_CHECK" &&
+            currentStep != "INVESTIGATION_SUMMARY" &&
+            currentStep != "INDIVIDUAL_MOTOR_SUMMARY" &&
+            currentStep != "EVAPORATOR_ICE_CHECK" &&
+            currentStep != "EVAPORATOR_ICE_SUMMARY" &&
+            currentStep != "AIRFLOW_OBSTRUCTION_CHECK" &&
+            currentStep != "AIRFLOW_OBSTRUCTION_SUMMARY"
+
         ) {
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -421,6 +1176,4 @@ fun InvestigationScreen(
             Text("Voltar às possíveis causas")
         }
     }
-
-
 }

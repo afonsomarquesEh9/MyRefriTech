@@ -189,3 +189,139 @@ val faultyMotorResult = DiagnosticResult(
     description = "A alimentação elétrica está chegando normalmente, o conector está em boas condições, mas o micromotor não apresenta funcionamento.",
     recommendedSolution = "Substituir o micromotor avariado por outro compatível com as especificações do equipamento."
 )
+
+val evaporatorIceChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Falha no sistema de degelo",
+        description = "Verifique se o degelo está ocorrendo corretamente e conforme a programação estabelecida.",
+        recommendedActions = listOf(
+            "Verificar a programação e os horários de degelo.",
+            "Investigar possíveis falhas no acionamento do sistema.",
+            "Corrigir irregularidades identificadas no ciclo de degelo."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Resistências de degelo",
+        description = "Quando aplicável, verifique a continuidade e o funcionamento das resistências de degelo.",
+        recommendedActions = listOf(
+            "Verificar a integridade elétrica das resistências.",
+            "Corrigir possíveis problemas nas conexões elétricas.",
+            "Substituir resistências que apresentem avaria confirmada."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Sensor de degelo",
+        description = "Verifique o posicionamento, a integridade e a leitura do sensor responsável pelo controle do degelo.",
+        recommendedActions = listOf(
+            "Corrigir o posicionamento do sensor.",
+            "Verificar a integridade dos cabos e conexões.",
+            "Substituir o sensor caso apresente falha confirmada."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Controlador eletrônico",
+        description = "Confira os parâmetros e a programação do controlador responsáveis pelo funcionamento do degelo.",
+        recommendedActions = listOf(
+            "Corrigir parâmetros de degelo configurados incorretamente.",
+            "Verificar o funcionamento das saídas de acionamento.",
+            "Investigar possíveis falhas no controlador."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Dreno do evaporador",
+        description = "Verifique se existem obstruções que impeçam o escoamento adequado da água proveniente do degelo.",
+        recommendedActions = listOf(
+            "Realizar a limpeza do dreno.",
+            "Remover obstruções que impeçam o escoamento.",
+            "Verificar o correto direcionamento e escoamento da água."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Ventiladores do evaporador",
+        description = "Verifique o funcionamento dos ventiladores e possíveis interferências que comprometam a circulação de ar.",
+        recommendedActions = listOf(
+            "Investigar falhas elétricas ou mecânicas nos ventiladores.",
+            "Corrigir interferências que impeçam a ventilação.",
+            "Substituir componentes avariados, quando necessário."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Vedação e infiltração de ar",
+        description = "Verifique possíveis falhas de vedação e entradas excessivas de ar e umidade no ambiente refrigerado.",
+        recommendedActions = listOf(
+            "Corrigir falhas nas vedações.",
+            "Substituir guarnições danificadas.",
+            "Investigar possíveis pontos de infiltração de ar."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Setpoint de temperatura e histerese",
+        description = "Verifique se o setpoint não está excessivamente baixo e se a histerese está acima de 2 °C, considerando as especificações do equipamento.",
+        recommendedActions = listOf(
+            "Adequar o setpoint às condições de operação do equipamento.",
+            "Ajustar a histerese conforme as recomendações do fabricante.",
+            "Verificar se os parâmetros configurados estão coerentes com a aplicação."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Defletor ou direcionador de ar",
+        description = "Verifique se o defletor ou direcionador de ar acima do evaporador está instalado e posicionado corretamente.",
+        recommendedActions = listOf(
+            "Corrigir o posicionamento do defletor.",
+            "Reinstalar componentes montados incorretamente.",
+            "Substituir peças danificadas ou ausentes."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Limpeza e condições das aletas do trocador de calor",
+        description = "Verifique se o fluxo de ar está livre. Aletas amassadas ou sujas dificultam a troca de calor e podem contribuir para condições inadequadas de funcionamento do evaporador, incluindo retorno de líquido e congelamento excessivo.",
+        recommendedActions = listOf(
+            "Realizar a limpeza adequada das aletas do evaporador.",
+            "Corrigir cuidadosamente aletas amassadas, quando possível.",
+            "Investigar as condições de superaquecimento e possível retorno de líquido por meio de medições do circuito frigorífico."
+        )
+    )
+)
+
+val airflowObstructionChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Acúmulo de sujeira e bolor nas colmeias",
+        description = "Verifique possíveis acúmulos de sujeira ou bolor nas partes interna e externa da colmeia.",
+        recommendedActions = listOf(
+            "Realizar a limpeza das partes interna e externa da colmeia.",
+            "Remover completamente os resíduos e focos de bolor.",
+            "Verificar as condições da colmeia após a limpeza."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Obstruções nas grelhas de insuflamento",
+        description = "Verifique possíveis obstruções nas grelhas de insuflamento, tanto na parte interna quanto na externa.",
+        recommendedActions = listOf(
+            "Remover materiais que estejam obstruindo as grelhas.",
+            "Realizar a limpeza das partes interna e externa.",
+            "Garantir que as grelhas estejam livres para permitir a circulação de ar."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Deformações nas colmeias",
+        description = "Verifique possíveis deformações nas colmeias que possam impedir ou restringir o fluxo de ar.",
+        recommendedActions = listOf(
+            "Corrigir deformações, quando tecnicamente possível.",
+            "Reposicionar corretamente a colmeia.",
+            "Substituir a colmeia caso apresente danos que comprometam o fluxo de ar."
+        )
+    )
+)
