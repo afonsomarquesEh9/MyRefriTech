@@ -325,3 +325,122 @@ val airflowObstructionChecks = listOf(
         )
     )
 )
+
+val motorsLowRotationInvestigation = DiagnosticInvestigation(
+    type = DiagnosticType.MOTORS_LOW_ROTATION,
+    causeName = "Motores com rotação abaixo do esperado",
+    initialQuestion = DiagnosticQuestion(
+        question = "A redução da ventilação ocorre em todos os motores ou somente em alguns?",
+        answers = listOf(
+            "Todos os motores",
+            "Somente alguns motores"
+        )
+    )
+)
+
+val lowRotationAnswers = listOf(
+    DiagnosticAnswer(
+        text = "Todos os motores",
+        nextStep = "ALL_MOTORS_LOW_ROTATION_CHECK"
+    ),
+    DiagnosticAnswer(
+        text = "Somente alguns motores",
+        nextStep = "INDIVIDUAL_MOTORS_LOW_ROTATION_CHECK"
+    )
+)
+
+val allMotorsLowRotationChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Tensão de alimentação",
+        description = "Verifique a tensão de alimentação dos motores durante o funcionamento e compare o valor encontrado com a especificação do fabricante.",
+        recommendedActions = listOf(
+            "Investigar possíveis quedas de tensão na alimentação.",
+            "Verificar se a tensão fornecida está de acordo com as especificações dos motores.",
+            "Corrigir irregularidades identificadas no circuito de alimentação."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Conexões elétricas",
+        description = "Verifique os terminais, bornes e conexões elétricas do circuito de alimentação dos motores, procurando oxidação, mau contato ou conexões frouxas.",
+        recommendedActions = listOf(
+            "Corrigir conexões com mau contato.",
+            "Limpar ou substituir terminais oxidados ou danificados.",
+            "Garantir o aperto adequado das conexões."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condutores e emendas",
+        description = "Verifique a integridade dos condutores de alimentação e possíveis emendas inadequadas que possam provocar quedas de tensão.",
+        recommendedActions = listOf(
+            "Substituir condutores danificados.",
+            "Refazer emendas inadequadas.",
+            "Corrigir possíveis pontos de resistência elétrica elevada."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Circuito de alimentação e acionamento",
+        description = "Verifique o funcionamento dos contatores, relés e demais componentes responsáveis pela alimentação e acionamento dos motores.",
+        recommendedActions = listOf(
+            "Investigar possíveis falhas nos contatos de potência.",
+            "Corrigir irregularidades no circuito de acionamento.",
+            "Substituir componentes que apresentem defeito confirmado."
+        )
+    )
+)
+
+val individualLowRotationChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Alimentação individual do micromotor",
+        description = "Verifique a tensão de alimentação diretamente no micromotor durante o funcionamento e compare com a especificação do fabricante.",
+        recommendedActions = listOf(
+            "Investigar possíveis quedas de tensão no circuito individual.",
+            "Corrigir irregularidades na alimentação.",
+            "Verificar novamente a tensão após as correções."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Conectores e terminais",
+        description = "Verifique o conector e os terminais individuais do micromotor, procurando oxidação, mau contato ou danos.",
+        recommendedActions = listOf(
+            "Corrigir problemas de contato.",
+            "Substituir terminais danificados.",
+            "Substituir conectores comprometidos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condutores individuais",
+        description = "Verifique a integridade dos condutores responsáveis pela alimentação individual do micromotor.",
+        recommendedActions = listOf(
+            "Corrigir interrupções no circuito.",
+            "Substituir trechos de condutores danificados.",
+            "Refazer conexões inadequadas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições mecânicas",
+        description = "Verifique se existem atritos, travamentos ou interferências mecânicas que possam dificultar a movimentação do conjunto de ventilação.",
+        recommendedActions = listOf(
+            "Eliminar possíveis interferências mecânicas.",
+            "Corrigir problemas no suporte de sustentação.",
+            "Garantir movimentação livre do conjunto."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condição do micromotor",
+        description = "Se a alimentação elétrica estiver dentro das especificações e não existirem interferências mecânicas, considere a possibilidade de defeito interno do micromotor.",
+        recommendedActions = listOf(
+            "Confirmar a suspeita de defeito do micromotor.",
+            "Substituir o micromotor por outro compatível com as especificações do equipamento.",
+            "Verificar o funcionamento após a substituição."
+        )
+    )
+)

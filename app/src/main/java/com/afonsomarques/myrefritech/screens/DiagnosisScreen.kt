@@ -45,7 +45,8 @@ fun DiagnosisScreen(
             "Colméias/grelhas de insuflamento obstruídas",
             "Motores com rotação abaixo do padrão",
             "Módulo de ventilação montado incorretamente",
-            "Defletor ou direcionador de ar acima do evaporador ausente ou instalado incorretamente"
+            "Defletor ou direcionador de ar acima do evaporador ausente ou instalado incorretamente",
+            "Hélices avariadas ou com ângulo e montagem incorreta"
         )
 
         else -> emptyList()
