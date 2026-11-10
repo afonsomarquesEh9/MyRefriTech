@@ -25,6 +25,9 @@ import com.afonsomarques.myrefritech.motorsLowRotationInvestigation
 import com.afonsomarques.myrefritech.lowRotationAnswers
 import com.afonsomarques.myrefritech.allMotorsLowRotationChecks
 import com.afonsomarques.myrefritech.individualLowRotationChecks
+import com.afonsomarques.myrefritech.ventilationModuleChecks
+import com.afonsomarques.myrefritech.airDeflectorChecks
+import com.afonsomarques.myrefritech.propellerChecks
 @Composable
 fun InvestigationScreen(
     cause: String,
@@ -38,6 +41,15 @@ fun InvestigationScreen(
 
                 "Colméias/grelhas de insuflamento obstruídas" ->
                     "AIRFLOW_OBSTRUCTION_CHECK"
+
+                "Módulo de ventilação montado incorretamente" ->
+                    "VENTILATION_MODULE_CHECK"
+
+                "Defletor ou direcionador de ar acima do evaporador ausente ou instalado incorretamente" ->
+                    "AIR_DEFLECTOR_CHECK"
+
+                "Hélices avariadas ou com ângulo e montagem incorreta" ->
+                    "PROPELLER_CHECK"
 
                 else -> "INITIAL_QUESTION"
             }
@@ -1113,6 +1125,106 @@ fun InvestigationScreen(
                 }
             }
 
+            "VENTILATION_MODULE_CHECK" -> {
+
+                Text(
+                    text = "Verificação do módulo de ventilação",
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    itemsIndexed(ventilationModuleChecks) { index, check ->
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xFFF1F3F5)
+                            ),
+                            border = BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outlineVariant
+                            )
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(
+                                    text = "${index + 1}. ${check.title}",
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    text = check.description,
+                                    fontSize = 14.sp
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                Text(
+                                    text = "Resultado da verificação:",
+                                    fontWeight = FontWeight.SemiBold
+                                )
+
+                                listOf(
+                                    "Normal",
+                                    "Anormalidade encontrada",
+                                    "Não verificado"
+                                ).forEach { status ->
+
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                checkResults[index] = status
+                                            }
+                                            .padding(vertical = 5.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        RadioButton(
+                                            selected = checkResults[index] == status,
+                                            onClick = {
+                                                checkResults[index] = status
+                                            }
+                                        )
+
+                                        Text(
+                                            text = status,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "VENTILATION_MODULE_SUMMARY"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Concluir verificações")
+                        }
+                    }
+                }
+            }
+
             "INDIVIDUAL_MOTOR_CHECK" -> {
 
                 Text(
@@ -1209,6 +1321,206 @@ fun InvestigationScreen(
                         Button(
                             onClick = {
                                 currentStep = "INDIVIDUAL_MOTOR_SUMMARY"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Concluir verificações")
+                        }
+                    }
+                }
+            }
+
+            "AIR_DEFLECTOR_CHECK" -> {
+
+                Text(
+                    text = "Verificação do defletor ou direcionador de ar",
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    itemsIndexed(airDeflectorChecks) { index, check ->
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xFFF1F3F5)
+                            ),
+                            border = BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outlineVariant
+                            )
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(
+                                    text = "${index + 1}. ${check.title}",
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    text = check.description,
+                                    fontSize = 14.sp
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                Text(
+                                    text = "Resultado da verificação:",
+                                    fontWeight = FontWeight.SemiBold
+                                )
+
+                                listOf(
+                                    "Normal",
+                                    "Anormalidade encontrada",
+                                    "Não verificado"
+                                ).forEach { status ->
+
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                checkResults[index] = status
+                                            }
+                                            .padding(vertical = 5.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        RadioButton(
+                                            selected = checkResults[index] == status,
+                                            onClick = {
+                                                checkResults[index] = status
+                                            }
+                                        )
+
+                                        Text(
+                                            text = status,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "AIR_DEFLECTOR_SUMMARY"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Concluir verificações")
+                        }
+                    }
+                }
+            }
+
+            "PROPELLER_CHECK" -> {
+
+                Text(
+                    text = "Verificação das hélices",
+                    fontSize = 19.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    itemsIndexed(propellerChecks) { index, check ->
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xFFF1F3F5)
+                            ),
+                            border = BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outlineVariant
+                            )
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(
+                                    text = "${index + 1}. ${check.title}",
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    text = check.description,
+                                    fontSize = 14.sp
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                Text(
+                                    text = "Resultado da verificação:",
+                                    fontWeight = FontWeight.SemiBold
+                                )
+
+                                listOf(
+                                    "Normal",
+                                    "Anormalidade encontrada",
+                                    "Não verificado"
+                                ).forEach { status ->
+
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                checkResults[index] = status
+                                            }
+                                            .padding(vertical = 5.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        RadioButton(
+                                            selected = checkResults[index] == status,
+                                            onClick = {
+                                                checkResults[index] = status
+                                            }
+                                        )
+
+                                        Text(
+                                            text = status,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "PROPELLER_SUMMARY"
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -1347,6 +1659,266 @@ fun InvestigationScreen(
                         Button(
                             onClick = {
                                 currentStep = "AIRFLOW_OBSTRUCTION_CHECK"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Voltar às verificações")
+                        }
+                    }
+                }
+            }
+
+            "AIR_DEFLECTOR_SUMMARY" -> {
+
+                val normalCount = checkResults.values.count {
+                    it == "Normal"
+                }
+
+                val abnormalCount = checkResults.values.count {
+                    it == "Anormalidade encontrada"
+                }
+
+                val pendingCount = airDeflectorChecks.size -
+                        normalCount - abnormalCount
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    item {
+                        Text(
+                            text = "Resumo da investigação",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text("Verificações normais: $normalCount")
+                        Text("Anormalidades encontradas: $abnormalCount")
+                        Text("Não verificadas: $pendingCount")
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Detalhamento dos resultados",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    itemsIndexed(airDeflectorChecks) { index, check ->
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp)
+                        ) {
+                            Text(
+                                text = check.title,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Text(
+                                text = checkResults[index] ?: "Não verificado"
+                            )
+                        }
+
+                        HorizontalDivider()
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = "Recomendações para as anormalidades",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    itemsIndexed(airDeflectorChecks) { index, check ->
+
+                        if (checkResults[index] == "Anormalidade encontrada") {
+
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color(0xFFFFF3E0)
+                                )
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp)
+                                ) {
+                                    Text(
+                                        text = check.title,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp
+                                    )
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    check.recommendedActions.forEach { action ->
+                                        Text(
+                                            text = "• $action",
+                                            fontSize = 14.sp,
+                                            modifier = Modifier.padding(vertical = 3.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        if (abnormalCount == 0) {
+
+                            Text(
+                                text = "Nenhuma anormalidade foi registrada nas verificações realizadas. Isso não significa necessariamente que o equipamento esteja livre de falhas.",
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "AIR_DEFLECTOR_CHECK"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Voltar às verificações")
+                        }
+                    }
+                }
+            }
+
+            "VENTILATION_MODULE_SUMMARY" -> {
+
+                val normalCount = checkResults.values.count {
+                    it == "Normal"
+                }
+
+                val abnormalCount = checkResults.values.count {
+                    it == "Anormalidade encontrada"
+                }
+
+                val pendingCount = ventilationModuleChecks.size -
+                        normalCount - abnormalCount
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    item {
+                        Text(
+                            text = "Resumo da investigação",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text("Verificações normais: $normalCount")
+                        Text("Anormalidades encontradas: $abnormalCount")
+                        Text("Não verificadas: $pendingCount")
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Detalhamento dos resultados",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    itemsIndexed(ventilationModuleChecks) { index, check ->
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp)
+                        ) {
+                            Text(
+                                text = check.title,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Text(
+                                text = checkResults[index] ?: "Não verificado"
+                            )
+                        }
+
+                        HorizontalDivider()
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = "Recomendações para as anormalidades",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    itemsIndexed(ventilationModuleChecks) { index, check ->
+
+                        if (checkResults[index] == "Anormalidade encontrada") {
+
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color(0xFFFFF3E0)
+                                )
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp)
+                                ) {
+                                    Text(
+                                        text = check.title,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp
+                                    )
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    check.recommendedActions.forEach { action ->
+                                        Text(
+                                            text = "• $action",
+                                            fontSize = 14.sp,
+                                            modifier = Modifier.padding(vertical = 3.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        if (abnormalCount == 0) {
+
+                            Text(
+                                text = "Nenhuma anormalidade foi registrada nas verificações realizadas. Isso não significa necessariamente que o equipamento esteja livre de falhas.",
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "VENTILATION_MODULE_CHECK"
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -1643,6 +2215,136 @@ fun InvestigationScreen(
                 }
             }
 
+            "PROPELLER_SUMMARY" -> {
+
+                val normalCount = checkResults.values.count {
+                    it == "Normal"
+                }
+
+                val abnormalCount = checkResults.values.count {
+                    it == "Anormalidade encontrada"
+                }
+
+                val pendingCount = propellerChecks.size -
+                        normalCount - abnormalCount
+
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    item {
+                        Text(
+                            text = "Resumo da investigação",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text("Verificações normais: $normalCount")
+                        Text("Anormalidades encontradas: $abnormalCount")
+                        Text("Não verificadas: $pendingCount")
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Detalhamento dos resultados",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    itemsIndexed(propellerChecks) { index, check ->
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp)
+                        ) {
+                            Text(
+                                text = check.title,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Text(
+                                text = checkResults[index] ?: "Não verificado"
+                            )
+                        }
+
+                        HorizontalDivider()
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Text(
+                            text = "Recomendações para as anormalidades",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    itemsIndexed(propellerChecks) { index, check ->
+
+                        if (checkResults[index] == "Anormalidade encontrada") {
+
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color(0xFFFFF3E0)
+                                )
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp)
+                                ) {
+                                    Text(
+                                        text = check.title,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp
+                                    )
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    check.recommendedActions.forEach { action ->
+                                        Text(
+                                            text = "• $action",
+                                            fontSize = 14.sp,
+                                            modifier = Modifier.padding(vertical = 3.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        if (abnormalCount == 0) {
+
+                            Text(
+                                text = "Nenhuma anormalidade foi registrada nas verificações realizadas. Isso não significa necessariamente que o equipamento esteja livre de falhas.",
+                                fontSize = 14.sp
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = {
+                                currentStep = "PROPELLER_CHECK"
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Voltar às verificações")
+                        }
+                    }
+                }
+            }
+
             "SUGGEST_LOW_ROTATION" -> {
 
                 Text(
@@ -1665,7 +2367,13 @@ fun InvestigationScreen(
             currentStep != "ALL_MOTORS_LOW_ROTATION_CHECK" &&
             currentStep != "ALL_MOTORS_LOW_ROTATION_SUMMARY" &&
             currentStep != "INDIVIDUAL_MOTORS_LOW_ROTATION_CHECK" &&
-            currentStep != "INDIVIDUAL_MOTORS_LOW_ROTATION_SUMMARY"
+            currentStep != "INDIVIDUAL_MOTORS_LOW_ROTATION_SUMMARY" &&
+            currentStep != "VENTILATION_MODULE_CHECK" &&
+            currentStep != "VENTILATION_MODULE_SUMMARY" &&
+            currentStep != "AIR_DEFLECTOR_CHECK" &&
+            currentStep != "AIR_DEFLECTOR_SUMMARY" &&
+            currentStep != "PROPELLER_CHECK" &&
+            currentStep != "PROPELLER_SUMMARY"
         ) {
             Spacer(modifier = Modifier.weight(1f))
         }

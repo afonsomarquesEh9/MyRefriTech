@@ -444,3 +444,102 @@ val individualLowRotationChecks = listOf(
         )
     )
 )
+
+val ventilationModuleChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Posicionamento do módulo",
+        description = "Verifique os encaixes e o correto posicionamento do módulo de ventilação.",
+        recommendedActions = listOf(
+            "Reposicionar o módulo corretamente.",
+            "Verificar se todos os encaixes estão devidamente fixados.",
+            "Garantir que o módulo esteja instalado conforme sua posição original."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Encaixe da estrutura do módulo",
+        description = "Verifique se a estrutura do módulo está completamente encaixada e corretamente posicionada para garantir máxima performance.",
+        recommendedActions = listOf(
+            "Corrigir o posicionamento da estrutura.",
+            "Realizar o encaixe completo do módulo.",
+            "Verificar se não existem folgas ou desalinhamentos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Fixação e segurança do módulo",
+        description = "Verifique se o módulo está devidamente fixado e se existe risco de queda decorrente das vibrações durante o funcionamento.",
+        recommendedActions = listOf(
+            "Restabelecer a fixação adequada do módulo.",
+            "Corrigir ou substituir elementos de fixação danificados.",
+            "Garantir a estabilidade do conjunto antes de colocar o equipamento em operação."
+        )
+    )
+)
+
+val airDeflectorChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Presença do defletor ou direcionador de ar",
+        description = "Verifique se o defletor ou direcionador de ar está presente acima do evaporador.",
+        recommendedActions = listOf(
+            "Instalar o defletor ou direcionador de ar adequado ao equipamento.",
+            "Verificar se o componente corresponde ao modelo do equipamento.",
+            "Confirmar se a instalação atende à configuração original."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Posicionamento e orientação do defletor",
+        description = "Verifique se o defletor está corretamente posicionado e orientado para direcionar o fluxo de ar conforme o projeto do equipamento.",
+        recommendedActions = listOf(
+            "Corrigir o posicionamento do defletor.",
+            "Ajustar sua orientação conforme a configuração original.",
+            "Verificar se o fluxo de ar está sendo direcionado corretamente."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Fixação e integridade do defletor",
+        description = "Verifique as condições estruturais do defletor, seus pontos de fixação e possíveis deformações ou danos.",
+        recommendedActions = listOf(
+            "Restabelecer a fixação adequada do componente.",
+            "Corrigir ou substituir elementos de fixação danificados.",
+            "Substituir o defletor caso apresente danos ou deformações que comprometam sua função."
+        )
+    )
+)
+
+val propellerChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Integridade das hélices",
+        description = "Verifique a existência de trincas, rachaduras, quebras ou deformações nas hélices.",
+        recommendedActions = listOf(
+            "Substituir hélices que apresentem trincas, rachaduras ou quebras.",
+            "Substituir hélices deformadas que comprometam a ventilação.",
+            "Utilizar componentes compatíveis com o equipamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Ângulo e orientação das pás",
+        description = "Verifique se o ângulo e a orientação das pás estão corretos, conforme as especificações do fabricante.",
+        recommendedActions = listOf(
+            "Corrigir a orientação da hélice, quando aplicável.",
+            "Substituir hélices com ângulo ou geometria incompatíveis.",
+            "Respeitar as especificações originais do fabricante."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Montagem e fixação das hélices",
+        description = "Verifique o encaixe da hélice no eixo do micromotor, o sentido de montagem, o alinhamento e sua fixação.",
+        recommendedActions = listOf(
+            "Corrigir o encaixe e o sentido de montagem da hélice.",
+            "Restabelecer a fixação adequada.",
+            "Substituir componentes de fixação danificados."
+        )
+    )
+)
