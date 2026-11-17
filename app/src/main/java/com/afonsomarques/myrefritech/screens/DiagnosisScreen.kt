@@ -39,6 +39,7 @@ fun DiagnosisScreen(
     onFullScanClick: () -> Unit
 ) {
     val possibleCauses = when (symptom) {
+
         "Ausência de ventilação ou baixa vazão de ar" -> listOf(
             "Motores de ventilação inoperantes",
             "Evaporador bloqueado ou com excesso de gelo",
@@ -47,6 +48,19 @@ fun DiagnosisScreen(
             "Módulo de ventilação montado incorretamente",
             "Defletor ou direcionador de ar acima do evaporador ausente ou instalado incorretamente",
             "Hélices avariadas ou com ângulo e montagem incorreta"
+        )
+
+        "Temperatura de insuflamento elevada" -> listOf(
+            "Baixa capacidade de refrigeração do evaporador",
+            "Vazão de refrigerante insuficiente no evaporador",
+            "Evaporador com excesso de gelo",
+            "Válvula de expansão com funcionamento inadequado",
+            "Temperatura de evaporação elevada",
+            "Ar de retorno com temperatura excessivamente elevada",
+            "Sensores de temperatura com leitura incorreta",
+            "Presença excessiva de óleo no evaporador",
+            "Filtro secador saturado (se houver)",
+            "Baixo nível de fluido líquido no tanque"
         )
 
         else -> emptyList()

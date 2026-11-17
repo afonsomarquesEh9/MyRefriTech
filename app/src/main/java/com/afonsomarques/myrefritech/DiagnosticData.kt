@@ -543,3 +543,432 @@ val propellerChecks = listOf(
         )
     )
 )
+
+// =====================================================
+// TEMPERATURA DE INSUFLAMENTO ELEVADA
+// =====================================================
+
+// 1. Baixa capacidade de refrigeração do evaporador
+
+val lowEvaporatorCapacityChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Limpeza da serpentina do evaporador",
+        description = "Verifique se há acúmulo de sujeira, gordura ou resíduos na serpentina, prejudicando a troca térmica.",
+        recommendedActions = listOf(
+            "Realizar a limpeza da serpentina do evaporador.",
+            "Verificar possíveis obstruções entre as aletas.",
+            "Confirmar se a troca térmica foi restabelecida após a limpeza."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Integridade das aletas do evaporador",
+        description = "Inspecione as aletas quanto a deformações, amassamentos ou danos que possam comprometer a passagem de ar e a troca térmica.",
+        recommendedActions = listOf(
+            "Corrigir deformações quando tecnicamente possível.",
+            "Avaliar a necessidade de substituição do evaporador caso os danos comprometam sua eficiência."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Eficiência da troca térmica",
+        description = "Meça as temperaturas do ar de retorno e do ar de insuflamento para avaliar o diferencial térmico do evaporador.",
+        recommendedActions = listOf(
+            "Comparar o diferencial de temperatura com os valores esperados para o equipamento.",
+            "Investigar possíveis causas caso o diferencial esteja abaixo do esperado.",
+            "Registrar as medições para acompanhamento."
+        )
+    )
+)
+
+
+// 2. Vazão de refrigerante insuficiente no evaporador
+
+val insufficientRefrigerantFlowChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Superaquecimento na saída do evaporador",
+        description = "Meça a pressão de sucção e a temperatura da linha de sucção na saída do evaporador para calcular o superaquecimento.",
+        recommendedActions = listOf(
+            "Comparar o superaquecimento com os parâmetros esperados para o sistema.",
+            "Investigar valores excessivamente elevados, que podem indicar alimentação insuficiente de refrigerante.",
+            "Considerar as condições de funcionamento antes de concluir o diagnóstico."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Distribuição de refrigerante no evaporador",
+        description = "Avalie se os circuitos do evaporador estão recebendo refrigerante de maneira adequada e uniforme.",
+        recommendedActions = listOf(
+            "Investigar diferenças anormais de temperatura entre os circuitos.",
+            "Verificar possíveis obstruções no distribuidor de refrigerante e nos capilares de distribuição.",
+            "Corrigir irregularidades identificadas na distribuição."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições de pressão e temperatura do circuito frigorífico",
+        description = "Analise as pressões e temperaturas de operação do circuito frigorífico, considerando as condições de funcionamento do evaporador.",
+        recommendedActions = listOf(
+            "Comparar os valores medidos com os parâmetros esperados.",
+            "Investigar condições que possam indicar alimentação insuficiente do evaporador.",
+            "Registrar as medições para auxiliar na análise."
+        )
+    )
+)
+
+
+// 3. Evaporador com excesso de gelo
+// Reutilizar a lista existente: evaporatorIceChecks.
+
+
+// 4. Válvula de expansão com funcionamento inadequado
+
+val expansionValveChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Superaquecimento na saída do evaporador",
+        description = "Meça o superaquecimento na saída do evaporador para avaliar se a válvula está alimentando adequadamente o evaporador.",
+        recommendedActions = listOf(
+            "Comparar o valor encontrado com os parâmetros recomendados.",
+            "Investigar superaquecimento excessivo.",
+            "Verificar a regulagem da válvula quando aplicável."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Bulbo sensor da válvula de expansão",
+        description = "Verifique o posicionamento, a fixação e o isolamento térmico do bulbo sensor da válvula.",
+        recommendedActions = listOf(
+            "Corrigir o posicionamento conforme orientação do fabricante.",
+            "Garantir bom contato térmico com a tubulação.",
+            "Verificar se o isolamento térmico está adequado."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Equalização de pressão",
+        description = "Quando houver equalização externa, verifique a tubulação quanto a obstruções, vazamentos ou danos.",
+        recommendedActions = listOf(
+            "Verificar a integridade da linha de equalização.",
+            "Corrigir obstruções ou vazamentos identificados.",
+            "Confirmar o funcionamento adequado da equalização."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Restrição ou obstrução na válvula",
+        description = "Investigue a presença de partículas, resíduos ou umidade que possam restringir a passagem de refrigerante pela válvula.",
+        recommendedActions = listOf(
+            "Verificar possíveis obstruções no orifício da válvula.",
+            "Realizar limpeza ou substituição quando necessário.",
+            "Investigar a origem dos contaminantes presentes no circuito."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Funcionamento do mecanismo da válvula",
+        description = "Avalie a resposta da válvula às variações de carga térmica e às condições de operação do sistema.",
+        recommendedActions = listOf(
+            "Investigar travamentos ou perda de resposta do mecanismo.",
+            "Verificar a integridade do elemento termostático.",
+            "Substituir a válvula caso seja confirmada falha de funcionamento."
+        )
+    )
+)
+
+
+// 5. Temperatura de evaporação elevada
+
+val highEvaporationTemperatureChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Pressão de sucção",
+        description = "Meça a pressão de sucção e compare com a pressão correspondente à temperatura de evaporação esperada para o refrigerante utilizado.",
+        recommendedActions = listOf(
+            "Consultar a tabela de pressão e temperatura do refrigerante.",
+            "Comparar a temperatura de evaporação encontrada com a condição de projeto.",
+            "Investigar pressões incompatíveis com a operação esperada."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Regulagem do controle de pressão de evaporação",
+        description = "Verifique os parâmetros e o funcionamento do controlador ou regulador de pressão de evaporação, quando existente.",
+        recommendedActions = listOf(
+            "Conferir os parâmetros configurados.",
+            "Verificar a atuação do dispositivo de controle.",
+            "Corrigir regulagens inadequadas conforme as especificações do sistema."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições de funcionamento dos compressores",
+        description = "Avalie se a capacidade frigorífica disponível dos compressores é compatível com a carga térmica do sistema.",
+        recommendedActions = listOf(
+            "Verificar o funcionamento dos compressores.",
+            "Avaliar se a capacidade disponível atende à demanda frigorífica.",
+            "Investigar possíveis limitações de capacidade."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições de operação do sistema frigorífico",
+        description = "Analise as condições gerais de pressão e temperatura do circuito para identificar situações que possam elevar a temperatura de evaporação.",
+        recommendedActions = listOf(
+            "Registrar as pressões e temperaturas de operação.",
+            "Comparar os valores com as condições esperadas do sistema.",
+            "Investigar as condições anormais identificadas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Atuação inadequada do controle de capacidade dos compressores",
+        description = "Quando houver controle de capacidade, verifique a atuação dos estágios, da modulação ou dos mecanismos de descarregamento dos compressores.",
+        recommendedActions = listOf(
+            "Verificar os parâmetros do controle de capacidade.",
+            "Avaliar a atuação dos estágios de capacidade.",
+            "Investigar falhas de modulação ou descarregamento."
+        )
+    )
+)
+
+
+// 6. Ar de retorno com temperatura excessivamente elevada
+
+val highReturnAirTemperatureChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Temperatura do ambiente ou dos produtos",
+        description = "Meça a temperatura do ambiente e dos produtos armazenados para avaliar se a carga térmica está dentro das condições previstas.",
+        recommendedActions = listOf(
+            "Verificar se a carga térmica está dentro dos limites do equipamento.",
+            "Avaliar excesso de produtos ou armazenamento inadequado.",
+            "Orientar a disposição dos produtos conforme as recomendações do equipamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Infiltração de ar quente",
+        description = "Inspecione portas, cortinas, tampas, vedações e demais pontos que possam permitir a entrada de ar quente.",
+        recommendedActions = listOf(
+            "Corrigir falhas de vedação.",
+            "Substituir componentes danificados.",
+            "Verificar se portas e tampas estão fechando corretamente."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições de carregamento e disposição dos produtos",
+        description = "Verifique se a quantidade e a disposição dos produtos permitem a circulação adequada do ar no equipamento.",
+        recommendedActions = listOf(
+            "Verificar se os limites de carregamento estão sendo respeitados.",
+            "Desobstruir entradas e saídas de ar.",
+            "Orientar a disposição correta dos produtos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Exposição excessiva a fontes de calor",
+        description = "Verifique a existência de fontes externas de calor, exposição solar ou equipamentos próximos que possam elevar a carga térmica.",
+        recommendedActions = listOf(
+            "Identificar possíveis fontes de calor próximas.",
+            "Reduzir a exposição quando possível.",
+            "Avaliar as condições de instalação e ventilação do equipamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Temperatura do ar de retorno",
+        description = "Meça as temperaturas do ar de retorno e de insuflamento durante a operação do equipamento.",
+        recommendedActions = listOf(
+            "Registrar as temperaturas medidas.",
+            "Avaliar o diferencial térmico encontrado.",
+            "Investigar os motivos da temperatura elevada do ar de retorno."
+        )
+    )
+)
+
+
+// 7. Sensores de temperatura com leitura incorreta
+
+val temperatureSensorChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Posicionamento do sensor",
+        description = "Verifique se o sensor está instalado na posição prevista pelo fabricante e pelo projeto do equipamento.",
+        recommendedActions = listOf(
+            "Corrigir o posicionamento quando necessário.",
+            "Verificar se o sensor está exposto a fontes de calor que possam interferir na leitura."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Fixação e contato térmico do sensor",
+        description = "Inspecione a fixação e o contato térmico do sensor com a superfície ou ambiente que deve ser monitorado.",
+        recommendedActions = listOf(
+            "Corrigir a fixação do sensor.",
+            "Garantir contato térmico adequado.",
+            "Verificar o isolamento térmico quando aplicável."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Integridade do sensor",
+        description = "Verifique a existência de danos físicos, oxidação, umidade ou deterioração no sensor.",
+        recommendedActions = listOf(
+            "Inspecionar o estado físico do sensor.",
+            "Corrigir problemas de conexão identificados.",
+            "Substituir o sensor caso seja constatada falha."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições da fiação e conexões",
+        description = "Inspecione cabos, emendas, conectores e terminais relacionados ao circuito do sensor.",
+        recommendedActions = listOf(
+            "Corrigir conexões frouxas ou oxidadas.",
+            "Verificar possíveis interrupções ou curtos-circuitos.",
+            "Substituir trechos de fiação danificados."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Precisão da leitura de temperatura",
+        description = "Compare a temperatura indicada pelo controlador com a leitura de um instrumento de referência confiável.",
+        recommendedActions = listOf(
+            "Verificar possíveis desvios entre as leituras.",
+            "Conferir a configuração do tipo de sensor no controlador.",
+            "Substituir o sensor caso esteja fora da tolerância especificada."
+        )
+    )
+)
+
+
+// 8. Presença excessiva de óleo no evaporador
+
+val excessOilInEvaporatorChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Indícios de acúmulo excessivo de óleo no evaporador",
+        description = "Avalie o comportamento térmico do evaporador e procure indícios de retenção excessiva de óleo em seus circuitos.",
+        recommendedActions = listOf(
+            "Investigar possíveis regiões com retenção de óleo.",
+            "Avaliar o comportamento térmico dos circuitos.",
+            "Não concluir o diagnóstico apenas pela aparência ou diferença de temperatura."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições de retorno de óleo ao sistema",
+        description = "Avalie as condições de retorno de óleo ao sistema, considerando o projeto da instalação e as condições de operação.",
+        recommendedActions = listOf(
+            "Verificar possíveis dificuldades de retorno de óleo.",
+            "Avaliar as condições de velocidade e circulação do refrigerante.",
+            "Investigar possíveis irregularidades no projeto ou na operação."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Funcionamento do sistema de gerenciamento de óleo",
+        description = "Quando existente, inspecione o separador de óleo, reservatório, reguladores de nível e demais componentes do gerenciamento de óleo.",
+        recommendedActions = listOf(
+            "Verificar o funcionamento do separador de óleo.",
+            "Avaliar o controle de nível e a alimentação de óleo.",
+            "Investigar falhas nos componentes de retorno e gerenciamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições de superaquecimento e operação do evaporador",
+        description = "Avalie o superaquecimento e as condições de operação que possam favorecer o transporte inadequado ou a retenção de óleo no evaporador.",
+        recommendedActions = listOf(
+            "Medir e avaliar o superaquecimento.",
+            "Investigar condições operacionais que prejudiquem o retorno de óleo.",
+            "Comparar os resultados com as condições previstas para o sistema."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Especificação do óleo utilizado na última troca",
+        description = "Verifique se o óleo utilizado na última manutenção atende às especificações recomendadas pelo fabricante do compressor e do sistema.",
+        recommendedActions = listOf(
+            "Conferir o tipo de óleo utilizado.",
+            "Verificar viscosidade, classificação e especificações técnicas.",
+            "Corrigir a utilização de óleo inadequado conforme orientação do fabricante."
+        )
+    )
+)
+
+
+// 9. Filtro secador saturado (se houver)
+
+val filterDrierChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Diferencial de temperatura na entrada e saída do filtro",
+        description = "Meça e compare as temperaturas na entrada e na saída do filtro secador durante o funcionamento do sistema.",
+        recommendedActions = listOf(
+            "Registrar as temperaturas medidas.",
+            "Investigar diferenças anormais que possam indicar restrição.",
+            "Avaliar a necessidade de substituição do filtro."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Diferencial de pressão no filtro secador",
+        description = "Avalie a queda de pressão entre a entrada e a saída do filtro secador utilizando instrumentos adequados.",
+        recommendedActions = listOf(
+            "Medir a diferença de pressão durante a operação.",
+            "Comparar o resultado com os valores esperados.",
+            "Substituir o filtro caso a restrição ou saturação seja confirmada."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Indicador de umidade e líquido (visor)",
+        description = "Quando houver visor com indicador de umidade, verifique a coloração do elemento indicador e as condições do refrigerante.",
+        recommendedActions = listOf(
+            "Comparar a coloração com a escala indicada pelo fabricante.",
+            "Avaliar a presença de umidade no sistema.",
+            "Não considerar a presença de bolhas, isoladamente, como confirmação de saturação do filtro."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Histórico e condição do filtro secador",
+        description = "Verifique o histórico de manutenção, o tempo de utilização e possíveis condições de contaminação do filtro.",
+        recommendedActions = listOf(
+            "Consultar o histórico de substituição do filtro.",
+            "Avaliar se o circuito foi aberto ou sofreu contaminação.",
+            "Considerar a substituição e os procedimentos adequados de evacuação do sistema."
+        )
+    )
+)
+
+
+// 10. Baixo nível de fluido líquido no tanque
+
+val lowLiquidReceiverLevelChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Quantidade de refrigerante no sistema",
+        description = "Avalie se a quantidade de refrigerante presente no sistema está de acordo com as especificações da instalação.",
+        recommendedActions = listOf(
+            "Investigar possível quantidade insuficiente de refrigerante.",
+            "Consultar o histórico de manutenção e intervenções no sistema.",
+            "Corrigir a carga conforme as especificações do fabricante e do projeto."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Possíveis vazamentos de refrigerante",
+        description = "Inspecione o circuito frigorífico para identificar possíveis vazamentos que possam reduzir a quantidade de refrigerante no sistema.",
+        recommendedActions = listOf(
+            "Realizar teste de vazamento conforme procedimento técnico adequado.",
+            "Corrigir os vazamentos identificados.",
+            "Após o reparo, executar os procedimentos adequados de vácuo e carga de refrigerante."
+        )
+    )
+)
