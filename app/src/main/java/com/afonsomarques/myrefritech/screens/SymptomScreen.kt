@@ -28,7 +28,6 @@ fun SymptomScreen(
         "Ausência de ventilação ou baixa vazão de ar",
         "Temperatura de insuflamento elevada",
         "Congelamento/bloqueio do evaporador ou obstrução da passagem do ar",
-        "Refrigeração com baixo rendimento",
         "Temperatura de insuflamento oscilando",
         "Disjuntor desarmando intermitentemente",
         "Alarme no controlador eletrônico"

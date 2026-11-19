@@ -326,6 +326,9 @@ val airflowObstructionChecks = listOf(
     )
 )
 
+val evaporatorAirflowBlockageChecks =
+    evaporatorIceChecks + airflowObstructionChecks
+
 val motorsLowRotationInvestigation = DiagnosticInvestigation(
     type = DiagnosticType.MOTORS_LOW_ROTATION,
     causeName = "Motores com rotação abaixo do esperado",
@@ -969,6 +972,385 @@ val lowLiquidReceiverLevelChecks = listOf(
             "Realizar teste de vazamento conforme procedimento técnico adequado.",
             "Corrigir os vazamentos identificados.",
             "Após o reparo, executar os procedimentos adequados de vácuo e carga de refrigerante."
+        )
+    )
+)
+
+// =====================================================
+// TEMPERATURA DE INSUFLAMENTO OSCILANDO
+// =====================================================
+
+// 1. Sensor de temperatura com leitura instável ou incorreta
+
+val unstableTemperatureSensorChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Integridade e conexão elétrica do sensor",
+        description = "Inspecione o sensor de temperatura, seus cabos, conectores e pontos de conexão. Verifique mau contato, oxidação, emendas inadequadas ou danos que possam provocar variações na leitura.",
+        recommendedActions = listOf(
+            "Corrigir conexões elétricas com mau contato.",
+            "Verificar a integridade dos cabos e conectores.",
+            "Substituir o sensor caso apresente danos ou defeitos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Estabilidade da leitura de temperatura",
+        description = "Acompanhe a leitura apresentada pelo controlador e observe se ocorrem oscilações bruscas ou variações incompatíveis com as condições reais de funcionamento.",
+        recommendedActions = listOf(
+            "Verificar se as oscilações também ocorrem na medição física da temperatura.",
+            "Investigar possíveis falhas intermitentes no sensor ou em sua conexão.",
+            "Avaliar a resposta do sensor durante o funcionamento do equipamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Comparação com instrumento de referência",
+        description = "Compare a temperatura indicada pelo controlador com a medição realizada por um instrumento de referência, utilizando um ponto de medição e condições equivalentes.",
+        recommendedActions = listOf(
+            "Verificar se existe diferença significativa entre as leituras.",
+            "Avaliar a precisão do sensor e a compatibilidade com o controlador.",
+            "Substituir ou corrigir o sensor caso seja confirmada uma leitura incorreta."
+        )
+    )
+)
+
+// 2. Controlador eletrônico com parâmetros de controle inadequados
+
+val temperatureControllerChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Configuração do diferencial (histerese)",
+        description = "Verifique se o diferencial ou histerese de controle está configurado adequadamente para a aplicação. Valores inadequados podem provocar acionamentos frequentes e oscilações de temperatura.",
+        recommendedActions = listOf(
+            "Conferir o diferencial configurado no controlador.",
+            "Comparar o parâmetro com as recomendações do fabricante.",
+            "Ajustar o diferencial quando necessário, respeitando as características do equipamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Parâmetros de controle de temperatura",
+        description = "Verifique se o setpoint e os demais parâmetros de controle estão configurados de acordo com as condições de operação e as características do equipamento.",
+        recommendedActions = listOf(
+            "Conferir o setpoint configurado.",
+            "Verificar parâmetros de controle que possam provocar oscilações.",
+            "Restabelecer os parâmetros recomendados pelo fabricante, quando necessário."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Histórico de acionamentos e variações de temperatura",
+        description = "Analise o histórico de temperatura e os registros de acionamento do controlador para identificar possíveis relações entre os comandos de controle e as oscilações observadas.",
+        recommendedActions = listOf(
+            "Verificar a frequência dos acionamentos.",
+            "Identificar padrões de oscilação associados aos comandos do controlador.",
+            "Reavaliar os parâmetros de controle conforme os resultados encontrados."
+        )
+    )
+)
+
+// 3. Válvula de expansão com funcionamento instável (hunting)
+
+val expansionValveHuntingChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Oscilação do superaquecimento",
+        description = "Monitore a pressão de sucção e a temperatura da linha de sucção na saída do evaporador. Observe se ocorrem variações cíclicas e frequentes no superaquecimento.",
+        recommendedActions = listOf(
+            "Registrar as variações de superaquecimento durante o funcionamento.",
+            "Verificar se as oscilações apresentam comportamento cíclico.",
+            "Investigar a estabilidade da alimentação de refrigerante."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Estabilidade da alimentação do evaporador",
+        description = "Observe o comportamento da alimentação de refrigerante no evaporador, verificando possíveis alternâncias entre condições de excesso e insuficiência de alimentação.",
+        recommendedActions = listOf(
+            "Verificar possíveis oscilações na alimentação de refrigerante.",
+            "Avaliar a distribuição de refrigerante no evaporador.",
+            "Investigar condições que possam provocar instabilidade na válvula."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Dimensionamento e capacidade da válvula",
+        description = "Verifique se a capacidade da válvula de expansão é compatível com a capacidade frigorífica e as condições de operação do evaporador.",
+        recommendedActions = listOf(
+            "Conferir o modelo e a capacidade nominal da válvula.",
+            "Comparar sua capacidade com as condições reais de operação.",
+            "Avaliar a necessidade de correção do dimensionamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Bulbo sensor e equalização da válvula",
+        description = "Nas válvulas termostáticas, inspecione a fixação e o posicionamento do bulbo sensor, o isolamento térmico e a linha de equalização externa, quando existente.",
+        recommendedActions = listOf(
+            "Corrigir o posicionamento e a fixação do bulbo.",
+            "Verificar e restabelecer o isolamento térmico.",
+            "Inspecionar a linha de equalização quanto a obstruções, vazamentos ou danos."
+        )
+    )
+)
+
+// 5. Variação frequente da capacidade frigorífica do Rack
+
+val rackCapacityVariationChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Frequência de acionamento dos compressores",
+        description = "Observe se os compressores estão entrando e saindo de operação frequentemente, provocando variações na capacidade frigorífica disponível.",
+        recommendedActions = listOf(
+            "Verificar a frequência de partidas e paradas dos compressores.",
+            "Identificar possíveis ciclos curtos de funcionamento.",
+            "Investigar as condições que provocam alterações frequentes de capacidade."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Estabilidade da pressão de sucção durante o escalonamento",
+        description = "Monitore a pressão de sucção durante a entrada e saída dos compressores, verificando se ocorrem oscilações significativas após as mudanças de capacidade.",
+        recommendedActions = listOf(
+            "Registrar as variações de pressão durante o escalonamento.",
+            "Verificar se as oscilações coincidem com os acionamentos dos compressores.",
+            "Avaliar a estabilidade do controle de capacidade do Rack."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Funcionamento do sistema de modulação de capacidade",
+        description = "Verifique o funcionamento dos recursos de modulação de capacidade, como inversores de frequência, descarregadores de capacidade ou outros sistemas utilizados pelos compressores.",
+        recommendedActions = listOf(
+            "Verificar se a modulação ocorre de maneira estável.",
+            "Investigar oscilações ou respostas inadequadas dos dispositivos de controle.",
+            "Conferir os parâmetros de operação conforme as especificações do fabricante."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Parâmetros de controle da pressão de sucção",
+        description = "Verifique o setpoint, o diferencial de controle e os tempos de acionamento dos compressores, avaliando se os parâmetros favorecem alterações frequentes de capacidade.",
+        recommendedActions = listOf(
+            "Conferir o setpoint e o diferencial de pressão.",
+            "Verificar os tempos mínimos de funcionamento e parada.",
+            "Avaliar a necessidade de ajustes nos parâmetros de controle."
+        )
+    )
+)
+
+// 6. Controle de capacidade dos compressores provocando oscilações na sucção
+
+val compressorCapacityControlChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Resposta do controlador de sucção",
+        description = "Verifique se os comandos de capacidade enviados pelo controlador correspondem às variações reais da pressão de sucção e se a resposta do sistema ocorre de maneira estável.",
+        recommendedActions = listOf(
+            "Comparar os valores de pressão medidos com os valores reconhecidos pelo controlador.",
+            "Verificar possíveis atrasos ou instabilidades na resposta aos comandos.",
+            "Conferir os parâmetros de controle conforme as especificações do fabricante."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Sequenciamento dos compressores",
+        description = "Verifique se a sequência de entrada e saída dos compressores ocorre adequadamente, evitando alterações bruscas ou frequentes na capacidade frigorífica.",
+        recommendedActions = listOf(
+            "Analisar a sequência de acionamento dos compressores.",
+            "Verificar alternâncias excessivas entre compressores.",
+            "Conferir os parâmetros de escalonamento e prioridades de funcionamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Funcionamento dos inversores de frequência",
+        description = "Nos compressores com inversores, observe se a frequência e a rotação variam de maneira estável, sem oscilações excessivas ou comandos inconsistentes.",
+        recommendedActions = listOf(
+            "Verificar a frequência de operação e os comandos de referência.",
+            "Investigar oscilações de rotação ou falhas de comunicação.",
+            "Conferir os parâmetros de modulação do inversor."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Funcionamento dos descarregadores de capacidade",
+        description = "Nos compressores que utilizam descarregadores de capacidade, verifique se os dispositivos atuam corretamente e se não apresentam falhas elétricas, mecânicas ou de acionamento.",
+        recommendedActions = listOf(
+            "Verificar a atuação dos descarregadores durante as mudanças de capacidade.",
+            "Inspecionar componentes elétricos e eletromecânicos de acionamento.",
+            "Corrigir falhas identificadas no sistema de descarga."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Parâmetros de controle e temporização",
+        description = "Avalie os diferenciais de pressão, tempos mínimos de funcionamento e parada, intervalos entre acionamentos e limites de modulação configurados no controlador.",
+        recommendedActions = listOf(
+            "Conferir os diferenciais de controle de pressão.",
+            "Verificar os tempos mínimos e máximos de acionamento.",
+            "Avaliar ajustes que possam melhorar a estabilidade da pressão de sucção."
+        )
+    )
+)
+
+// Verificações para ventiladores do evaporador com funcionamento intermitente
+val intermittentEvaporatorFanChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Continuidade do funcionamento dos motores",
+        description = "Verifique se os motores dos ventiladores apresentam paradas inesperadas durante a operação.",
+        recommendedActions = listOf(
+            "Observe se os ventiladores interrompem o funcionamento sem que haja um comando de desligamento.",
+            "Verifique se algum motor apresenta falhas intermitentes durante a operação."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Alimentação elétrica dos ventiladores",
+        description = "Verifique se existem falhas ou oscilações na alimentação elétrica dos motores.",
+        recommendedActions = listOf(
+            "Verifique a tensão de alimentação durante o funcionamento dos ventiladores.",
+            "Inspecione conexões, relés, contatores e possíveis pontos de mau contato."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Atuação do controle de ventilação",
+        description = "Verifique se o controlador está provocando partidas e paradas frequentes dos ventiladores.",
+        recommendedActions = listOf(
+            "Observe os comandos de acionamento e desligamento enviados pelo controlador.",
+            "Verifique os parâmetros de controle e as condições que determinam o acionamento dos ventiladores."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições mecânicas dos ventiladores",
+        description = "Verifique se existem problemas mecânicos que dificultam ou interrompem a rotação dos ventiladores.",
+        recommendedActions = listOf(
+            "Inspecione rolamentos, ruídos anormais, aquecimento e possíveis travamentos.",
+            "Verifique se existe resistência mecânica excessiva durante a rotação."
+        )
+    )
+)
+
+// Verificações para ciclos de degelo interferindo na temperatura de insuflamento
+val defrostTemperatureVariationChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Frequência dos ciclos de degelo",
+        description = "Verifique se os ciclos de degelo estão ocorrendo em intervalos excessivamente curtos.",
+        recommendedActions = listOf(
+            "Compare os intervalos entre os ciclos de degelo com a programação configurada.",
+            "Verifique se o degelo está sendo iniciado frequentemente por condições inadequadas ou parâmetros incorretos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Duração dos ciclos de degelo",
+        description = "Verifique se o tempo de degelo está adequado ou se existem prolongamentos excessivos.",
+        recommendedActions = listOf(
+            "Compare a duração real dos ciclos com o tempo configurado no controlador.",
+            "Verifique se o degelo está sendo concluído dentro do tempo esperado."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Término do degelo",
+        description = "Verifique o funcionamento do sensor de fim de degelo e os parâmetros utilizados para encerrar o ciclo.",
+        recommendedActions = listOf(
+            "Confira a leitura e o posicionamento do sensor de término do degelo.",
+            "Verifique os parâmetros de temperatura de encerramento e o tempo máximo de degelo."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Retorno à refrigeração",
+        description = "Verifique o comportamento da temperatura após o término do degelo e durante a retomada da refrigeração.",
+        recommendedActions = listOf(
+            "Verifique o tempo de gotejamento após o término do degelo.",
+            "Confira o atraso na partida dos ventiladores e observe a recuperação da temperatura de insuflamento."
+        )
+    )
+)
+
+// Verificações para variação excessiva da carga térmica
+val thermalLoadVariationChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Variação da entrada de produtos",
+        description = "Verifique se a entrada frequente de produtos em temperaturas elevadas ou em grandes quantidades provoca alterações na carga térmica.",
+        recommendedActions = listOf(
+            "Observe a frequência e a quantidade de produtos introduzidos no equipamento.",
+            "Verifique se os produtos são armazenados em temperaturas acima da faixa de conservação."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Frequência de abertura de portas ou tampas",
+        description = "Verifique se a utilização frequente do equipamento provoca variações significativas na entrada de calor.",
+        recommendedActions = listOf(
+            "Observe a frequência e o tempo de abertura das portas ou tampas.",
+            "Verifique se a rotina de utilização do equipamento favorece a entrada excessiva de ar quente."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Distribuição dos produtos",
+        description = "Verifique se a disposição ou o volume de produtos interfere na circulação de ar e na troca térmica.",
+        recommendedActions = listOf(
+            "Inspecione se os produtos estão obstruindo as passagens de ar.",
+            "Verifique se o volume armazenado está dentro da capacidade recomendada para o equipamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições de operação do equipamento",
+        description = "Verifique se a carga térmica apresenta variações significativas em determinados horários ou períodos de funcionamento.",
+        recommendedActions = listOf(
+            "Compare as oscilações de temperatura com os horários de maior utilização do equipamento.",
+            "Observe se existe relação entre o aumento da carga térmica e as variações na temperatura de insuflamento."
+        )
+    )
+)
+
+// Verificações para infiltração intermitente de ar externo
+val externalAirInfiltrationChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Vedação de portas, tampas e cortinas de ar",
+        description = "Verifique se existem falhas de vedação que permitam a entrada de ar externo no equipamento.",
+        recommendedActions = listOf(
+            "Inspecione as borrachas de vedação quanto a danos, deformações e desgaste.",
+            "Verifique folgas, desalinhamentos e falhas no fechamento de portas e tampas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Condições das cortinas de ar",
+        description = "Verifique se as cortinas de ar estão funcionando corretamente e reduzindo a entrada de ar externo.",
+        recommendedActions = listOf(
+            "Confira o funcionamento dos ventiladores e a continuidade do fluxo de ar.",
+            "Verifique se a vazão e a distribuição do ar são suficientes para formar uma barreira adequada."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Aberturas e frestas no equipamento",
+        description = "Inspecione regiões que possam permitir a entrada de ar externo por frestas ou falhas de vedação.",
+        recommendedActions = listOf(
+            "Verifique passagens de tubulações, junções, painéis e pontos de conexão.",
+            "Identifique possíveis aberturas ou falhas de vedação na estrutura do equipamento."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Relação entre infiltração e oscilação de temperatura",
+        description = "Observe se as variações de temperatura de insuflamento coincidem com situações que favorecem a entrada de ar externo.",
+        recommendedActions = listOf(
+            "Compare os registros de temperatura com os períodos de abertura de portas e movimentação de pessoas.",
+            "Observe se alterações nas condições do ambiente externo coincidem com as oscilações de temperatura."
         )
     )
 )

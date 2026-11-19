@@ -63,6 +63,12 @@ fun DiagnosisScreen(
             "Baixo nível de fluido líquido no tanque"
         )
 
+        "Congelamento/bloqueio do evaporador ou obstrução da passagem do ar" -> listOf(
+            "Formação excessiva de gelo no evaporador",
+            "Colmeias de insuflamento obstruídas por sujeira ou resíduos",
+
+        )
+
         else -> emptyList()
     }
 

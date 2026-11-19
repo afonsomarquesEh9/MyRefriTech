@@ -80,6 +80,12 @@ fun InvestigationScreen(
 
                 "Evaporador com excesso de gelo" -> "EVAPORATOR_ICE_CHECK"
 
+                "Formação excessiva de gelo no evaporador" ->
+                    "EVAPORATOR_ICE_CHECK"
+
+                "Colmeias de insuflamento obstruídas por sujeira ou resíduos" ->
+                    "AIRFLOW_OBSTRUCTION_CHECK"
+
                 else -> "INITIAL_QUESTION"
             }
         )
