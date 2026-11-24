@@ -126,7 +126,8 @@ class MainActivity : ComponentActivity() {
                                     navController.popBackStack()
                                 },
                                 onSymptomSelected = { symptom ->
-
+                                    // O destino de diagnóstico lê estes dados da entrada anterior,
+                                    // preservando o argumento fora da URL de navegação.
                                     navController.getBackStackEntry("symptoms/{equipment}")
                                         .savedStateHandle
                                         .set("selected_symptom", symptom)
@@ -153,6 +154,8 @@ class MainActivity : ComponentActivity() {
                                     navController.popBackStack()
                                 },
                                 onCauseSelected = { cause ->
+                                    // A causa permanece no SavedStateHandle da rota diagnosis,
+                                    // de onde a tela seguinte a recupera.
                                     navController.currentBackStackEntry
                                         ?.savedStateHandle
                                         ?.set("selected_cause", cause)

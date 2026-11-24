@@ -37,11 +37,23 @@ import com.afonsomarques.myrefritech.temperatureSensorChecks
 import com.afonsomarques.myrefritech.excessOilInEvaporatorChecks
 import com.afonsomarques.myrefritech.filterDrierChecks
 import com.afonsomarques.myrefritech.lowLiquidReceiverLevelChecks
+import com.afonsomarques.myrefritech.unstableTemperatureSensorChecks
+import com.afonsomarques.myrefritech.temperatureControllerChecks
+import com.afonsomarques.myrefritech.expansionValveHuntingChecks
+import com.afonsomarques.myrefritech.evaporatingPressureOscillationChecks
+import com.afonsomarques.myrefritech.rackCapacityVariationChecks
+import com.afonsomarques.myrefritech.compressorCapacityControlChecks
+import com.afonsomarques.myrefritech.intermittentEvaporatorFanChecks
+import com.afonsomarques.myrefritech.defrostTemperatureVariationChecks
+import com.afonsomarques.myrefritech.thermalLoadVariationChecks
+import com.afonsomarques.myrefritech.externalAirInfiltrationChecks
 @Composable
 fun InvestigationScreen(
     cause: String,
     onBackClick: () -> Unit
 ) {
+    // Esta máquina de estados escolhe o primeiro passo compatível com a causa
+    // e permite reutilizar a mesma tela para os diferentes roteiros de investigação.
     var currentStep by remember {
         mutableStateOf(
             when (cause) {
@@ -86,16 +98,40 @@ fun InvestigationScreen(
                 "Colmeias de insuflamento obstruídas por sujeira ou resíduos" ->
                     "AIRFLOW_OBSTRUCTION_CHECK"
 
+                // Temperatura de insuflamento oscilando
+                "Sensor de temperatura com leitura instável ou incorreta" -> "GENERIC_CHECK"
+
+                "Controlador eletrônico com parâmetros de controle inadequados" -> "GENERIC_CHECK"
+
+                "Válvula de expansão com funcionamento instável (hunting)" -> "GENERIC_CHECK"
+
+                "Oscilação da pressão de evaporação" -> "GENERIC_CHECK"
+
+                "Variação frequente da capacidade frigorífica do rack" -> "GENERIC_CHECK"
+
+                "Controle de capacidade dos compressores provocando oscilações na sucção" -> "GENERIC_CHECK"
+
+                "Ventiladores do evaporador com funcionamento intermitente" -> "GENERIC_CHECK"
+
+                "Ciclos de degelo interferindo na temperatura de insuflamento" -> "GENERIC_CHECK"
+
+                "Variação excessiva da carga térmica no equipamento" -> "GENERIC_CHECK"
+
+                "Infiltração intermitente de ar externo" -> "GENERIC_CHECK"
+
                 else -> "INITIAL_QUESTION"
             }
         )
     }
 
 
+    // As chaves são os índices das listas de verificações; por isso, a ordem dessas
+    // listas deve permanecer estável enquanto os resultados estiverem em memória.
     val checkResults = remember {
         mutableStateMapOf<Int, String>()
     }
 
+    // Mantém os resultados do fluxo individual separados do fluxo geral.
     val individualCheckResults = remember {
         mutableStateMapOf<Int, String>()
     }
@@ -110,6 +146,8 @@ fun InvestigationScreen(
         else -> null
     }
 
+    // Fluxos que compartilham a mesma interface usam esta tabela para obter
+    // o conjunto de verificações específico de cada causa.
     val checksForCause = when (cause) {
         "Baixa capacidade de refrigeração do evaporador" ->
             lowEvaporatorCapacityChecks
@@ -137,6 +175,37 @@ fun InvestigationScreen(
 
         "Baixo nível de fluido líquido no tanque" ->
             lowLiquidReceiverLevelChecks
+
+        // Temperatura de insuflamento oscilando
+        "Sensor de temperatura com leitura instável ou incorreta" ->
+            unstableTemperatureSensorChecks
+
+        "Controlador eletrônico com parâmetros de controle inadequados" ->
+            temperatureControllerChecks
+
+        "Válvula de expansão com funcionamento instável (hunting)" ->
+            expansionValveHuntingChecks
+
+        "Oscilação da pressão de evaporação" ->
+            evaporatingPressureOscillationChecks
+
+        "Variação frequente da capacidade frigorífica do rack" ->
+            rackCapacityVariationChecks
+
+        "Controle de capacidade dos compressores provocando oscilações na sucção" ->
+            compressorCapacityControlChecks
+
+        "Ventiladores do evaporador com funcionamento intermitente" ->
+            intermittentEvaporatorFanChecks
+
+        "Ciclos de degelo interferindo na temperatura de insuflamento" ->
+            defrostTemperatureVariationChecks
+
+        "Variação excessiva da carga térmica no equipamento" ->
+            thermalLoadVariationChecks
+
+        "Infiltração intermitente de ar externo" ->
+            externalAirInfiltrationChecks
 
         else -> emptyList()
     }

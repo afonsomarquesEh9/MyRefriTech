@@ -67,6 +67,21 @@ fun DiagnosisScreen(
             "Formação excessiva de gelo no evaporador",
             "Colmeias de insuflamento obstruídas por sujeira ou resíduos",
 
+
+
+        )
+
+        "Temperatura de insuflamento oscilando" -> listOf(
+            "Sensor de temperatura com leitura instável ou incorreta",
+            "Controlador eletrônico com parâmetros de controle inadequados",
+            "Válvula de expansão com funcionamento instável (hunting)",
+            "Oscilação da pressão de evaporação",
+            "Variação frequente da capacidade frigorífica do rack",
+            "Controle de capacidade dos compressores provocando oscilações na sucção",
+            "Ventiladores do evaporador com funcionamento intermitente",
+            "Ciclos de degelo interferindo na temperatura de insuflamento",
+            "Variação excessiva da carga térmica no equipamento",
+            "Infiltração intermitente de ar externo"
         )
 
         else -> emptyList()

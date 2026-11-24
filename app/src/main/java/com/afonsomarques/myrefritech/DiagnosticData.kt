@@ -1354,3 +1354,43 @@ val externalAirInfiltrationChecks = listOf(
         )
     )
 )
+
+// Verificações para oscilação da pressão de evaporação
+val evaporatingPressureOscillationChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Monitoramento da pressão de sucção",
+        description = "Verifique se a pressão de sucção apresenta oscilações durante o funcionamento do sistema.",
+        recommendedActions = listOf(
+            "Monitore a pressão de sucção utilizando manômetros ou instrumentos adequados.",
+            "Compare as leituras com a faixa de pressão esperada para as condições de operação."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Estabilidade do superaquecimento",
+        description = "Verifique se existem variações excessivas no superaquecimento associadas às oscilações da pressão de evaporação.",
+        recommendedActions = listOf(
+            "Monitore o superaquecimento na saída do evaporador.",
+            "Observe se as variações do superaquecimento coincidem com as oscilações da pressão de sucção."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Comportamento do controle de sucção do rack",
+        description = "Verifique se o controlador mantém a pressão de sucção dentro da faixa configurada ou provoca oscilações frequentes.",
+        recommendedActions = listOf(
+            "Confira os parâmetros de controle e o setpoint de pressão de sucção.",
+            "Analise o comportamento do controlador durante as variações de carga do sistema."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Variação da pressão durante a operação",
+        description = "Identifique se as oscilações de pressão ocorrem em situações específicas de funcionamento do sistema.",
+        recommendedActions = listOf(
+            "Observe o comportamento da pressão durante a entrada e saída de compressores.",
+            "Compare as oscilações com alterações de carga térmica e mudanças nas condições de operação."
+        )
+    )
+)
