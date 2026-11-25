@@ -1394,3 +1394,540 @@ val evaporatingPressureOscillationChecks = listOf(
         )
     )
 )
+
+// =====================================================
+// DISJUNTOR DESARMANDO INTERMITENTEMENTE
+// =====================================================
+
+// 1. Sobrecarga elétrica no circuito
+
+val circuitOverloadChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Medição da corrente elétrica do circuito",
+        description = "Meça a corrente elétrica consumida pelo circuito utilizando alicate amperímetro e compare os valores encontrados com a corrente nominal prevista para a instalação.",
+        recommendedActions = listOf(
+            "Medir a corrente nas fases do circuito.",
+            "Comparar os valores com a capacidade nominal do circuito.",
+            "Identificar se existe corrente acima do limite admissível.",
+            "Verificar se a sobrecarga ocorre continuamente ou em determinados momentos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Identificação dos equipamentos conectados ao circuito",
+        description = "Verifique quais equipamentos estão alimentados pelo mesmo circuito e se a soma das correntes consumidas ultrapassa sua capacidade de operação.",
+        recommendedActions = listOf(
+            "Identificar todos os equipamentos alimentados pelo circuito.",
+            "Consultar as correntes nominais dos equipamentos.",
+            "Verificar possíveis ligações adicionais não previstas no projeto.",
+            "Avaliar a necessidade de redistribuição das cargas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Sobrecarga durante partidas simultâneas",
+        description = "Investigue se o disparo ocorre quando dois ou mais equipamentos entram em funcionamento simultaneamente, provocando um aumento momentâneo da corrente elétrica.",
+        recommendedActions = listOf(
+            "Monitorar a corrente durante as partidas.",
+            "Verificar a ocorrência de partidas simultâneas.",
+            "Avaliar a necessidade de escalonamento das partidas.",
+            "Verificar se a proteção está adequada às características das cargas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Desequilíbrio de corrente entre fases",
+        description = "Verifique se existe diferença significativa entre as correntes medidas nas fases, indicando distribuição inadequada das cargas ou possíveis anormalidades elétricas.",
+        recommendedActions = listOf(
+            "Medir individualmente as correntes das fases.",
+            "Comparar os valores encontrados.",
+            "Identificar possíveis concentrações de carga em uma única fase.",
+            "Avaliar a redistribuição das cargas, quando aplicável."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Monitoramento da corrente durante a operação",
+        description = "Acompanhe o comportamento da corrente elétrica durante diferentes condições de funcionamento para identificar picos ou aumentos progressivos que possam provocar o disparo do disjuntor.",
+        recommendedActions = listOf(
+            "Monitorar a corrente durante ciclos de funcionamento.",
+            "Observar o comportamento durante partidas e paradas.",
+            "Identificar horários ou condições associados aos disparos.",
+            "Registrar os valores encontrados para análise."
+        )
+    )
+)
+
+// 2. Motor de ventilação com falha elétrica intermitente
+
+val intermittentMotorElectricalChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Medição da corrente elétrica do motor",
+        description = "Meça a corrente consumida pelo motor durante o funcionamento e verifique possíveis oscilações, picos ou valores acima do especificado pelo fabricante.",
+        recommendedActions = listOf(
+            "Medir a corrente de funcionamento.",
+            "Comparar os valores com a corrente nominal.",
+            "Observar oscilações durante a operação.",
+            "Verificar se o consumo aumenta antes do disparo do disjuntor."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção dos enrolamentos do motor",
+        description = "Verifique a integridade elétrica dos enrolamentos, identificando possíveis alterações de resistência, interrupções ou curtos entre espiras.",
+        recommendedActions = listOf(
+            "Medir a resistência dos enrolamentos.",
+            "Comparar os resultados com os valores de referência do fabricante.",
+            "Verificar possíveis interrupções ou irregularidades.",
+            "Avaliar a necessidade de substituição do motor."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Teste de isolamento elétrico",
+        description = "Verifique as condições de isolamento entre os enrolamentos e a carcaça do motor, identificando possíveis fugas de corrente para aterramento.",
+        recommendedActions = listOf(
+            "Realizar teste com megômetro, conforme especificações do fabricante.",
+            "Verificar a resistência de isolamento.",
+            "Identificar possíveis sinais de deterioração.",
+            "Substituir o motor caso o isolamento esteja comprometido."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção das conexões e terminais elétricos",
+        description = "Verifique se existem conexões frouxas, oxidadas ou com sinais de aquecimento que possam provocar interrupções ou instabilidade elétrica durante o funcionamento.",
+        recommendedActions = listOf(
+            "Inspecionar terminais e conectores.",
+            "Verificar sinais de carbonização ou oxidação.",
+            "Avaliar as condições dos cabos de alimentação.",
+            "Corrigir conexões inadequadas e substituir componentes danificados."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Verificação do funcionamento após aquecimento",
+        description = "Investigue se o motor apresenta alterações elétricas após atingir determinada temperatura de operação, indicando possível falha intermitente associada ao aquecimento dos enrolamentos ou dos componentes internos.",
+        recommendedActions = listOf(
+            "Monitorar o funcionamento durante um ciclo operacional.",
+            "Acompanhar a corrente elétrica durante o aquecimento.",
+            "Verificar se ocorrem interrupções ou alterações no funcionamento.",
+            "Avaliar a substituição do motor caso a falha seja confirmada."
+        )
+    )
+)
+
+// Verificações para curto-circuito intermitente na instalação elétrica
+val intermittentShortCircuitChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Inspeção visual da instalação elétrica",
+        description = "Verificar cabos, condutores e componentes em busca de danos, isolamento deteriorado, marcas de queimadura ou pontos de contato indevido entre condutores.",
+        recommendedActions = listOf(
+            "Inspecionar toda a instalação elétrica do equipamento.",
+            "Verificar cabos prensados, danificados ou com isolamento comprometido.",
+            "Identificar possíveis pontos de contato entre condutores.",
+            "Substituir os componentes ou trechos de cabos danificados."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Teste de continuidade entre condutores",
+        description = "Verificar se existe continuidade elétrica indevida entre condutores que deveriam permanecer isolados entre si.",
+        recommendedActions = listOf(
+            "Desenergizar o circuito antes de iniciar os testes.",
+            "Isolar os condutores e componentes necessários para a medição.",
+            "Utilizar um multímetro para verificar a continuidade entre os condutores.",
+            "Investigar qualquer continuidade não prevista no circuito."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Teste de resistência de isolamento",
+        description = "Avaliar as condições do isolamento elétrico dos cabos e componentes para identificar possíveis falhas que possam provocar curtos-circuitos.",
+        recommendedActions = listOf(
+            "Desenergizar o circuito antes do ensaio.",
+            "Desconectar componentes eletrônicos sensíveis conforme orientação do fabricante.",
+            "Realizar o teste com instrumento adequado.",
+            "Comparar os resultados com os valores especificados pelo fabricante ou normas aplicáveis."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção de componentes e dispositivos elétricos",
+        description = "Verificar contatores, relés, terminais, bornes e demais dispositivos em busca de danos, deformações ou falhas que possam provocar contato elétrico indevido.",
+        recommendedActions = listOf(
+            "Inspecionar os componentes elétricos do circuito.",
+            "Verificar sinais de aquecimento, carbonização ou deformação.",
+            "Avaliar as condições dos contatos e terminais.",
+            "Substituir componentes que apresentem falhas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Investigação de falhas intermitentes durante a operação",
+        description = "Identificar condições específicas de funcionamento que possam provocar o curto-circuito, como vibração, movimentação de cabos ou aquecimento dos componentes.",
+        recommendedActions = listOf(
+            "Verificar se o desarme ocorre em alguma etapa específica da operação.",
+            "Investigar possíveis interferências causadas por vibração ou movimentação dos cabos.",
+            "Inspecionar componentes que apresentem falhas após aquecimento.",
+            "Registrar as condições em que a falha acontece para direcionar o diagnóstico."
+        )
+    )
+)
+
+// Verificações para fuga de corrente para aterramento
+val groundLeakageChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Teste de isolamento dos motores elétricos",
+        description = "Avaliar as condições do isolamento elétrico dos motores para identificar possíveis fugas de corrente para a carcaça ou aterramento.",
+        recommendedActions = listOf(
+            "Desenergizar o circuito antes de iniciar os testes.",
+            "Desconectar os motores do circuito de alimentação.",
+            "Realizar o teste de isolamento com instrumento adequado.",
+            "Comparar os resultados com os valores recomendados pelo fabricante."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção das resistências elétricas de degelo",
+        description = "Verificar se as resistências de degelo apresentam danos ou deterioração do isolamento que possam provocar fuga de corrente.",
+        recommendedActions = listOf(
+            "Inspecionar visualmente as resistências e seus terminais.",
+            "Verificar sinais de umidade, oxidação ou deterioração.",
+            "Realizar teste de isolamento com as resistências desconectadas.",
+            "Substituir resistências que apresentem isolamento comprometido."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção dos cabos e condutores elétricos",
+        description = "Identificar danos no isolamento dos cabos que possam permitir contato indevido entre condutores energizados e partes metálicas aterradas.",
+        recommendedActions = listOf(
+            "Inspecionar os cabos ao longo de toda a instalação.",
+            "Verificar pontos de atrito, esmagamento ou ressecamento.",
+            "Identificar possíveis contatos entre condutores e estruturas metálicas.",
+            "Substituir cabos que apresentem isolamento danificado."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Verificação da corrente de fuga",
+        description = "Medir a corrente de fuga do circuito para identificar possíveis perdas de corrente para o aterramento durante a operação.",
+        recommendedActions = listOf(
+            "Utilizar alicate amperímetro apropriado para medição de corrente de fuga.",
+            "Avaliar a corrente residual nos condutores do circuito.",
+            "Verificar se os valores estão dentro dos limites aplicáveis.",
+            "Investigar os equipamentos e componentes associados à fuga identificada."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção das conexões de aterramento",
+        description = "Verificar a continuidade e as condições das conexões do condutor de proteção, garantindo que as partes metálicas estejam corretamente aterradas.",
+        recommendedActions = listOf(
+            "Inspecionar as conexões do condutor de proteção.",
+            "Verificar sinais de oxidação, mau contato ou desconexão.",
+            "Avaliar a continuidade do aterramento com instrumento adequado.",
+            "Corrigir conexões inadequadas ou interrompidas."
+        )
+    )
+)
+
+// Verificações para conexões elétricas frouxas ou oxidadas
+val looseOrCorrodedConnectionsChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Inspeção visual dos terminais e conexões",
+        description = "Verificar terminais, bornes e pontos de conexão em busca de oxidação, corrosão, sujeira ou sinais de mau contato.",
+        recommendedActions = listOf(
+            "Inspecionar visualmente todas as conexões elétricas do circuito.",
+            "Identificar sinais de oxidação, corrosão ou carbonização.",
+            "Verificar se existem terminais danificados ou deformados.",
+            "Realizar a limpeza ou substituição dos componentes comprometidos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Verificação do aperto das conexões",
+        description = "Avaliar se os terminais e bornes estão devidamente fixados, evitando mau contato e aquecimento durante a operação.",
+        recommendedActions = listOf(
+            "Desenergizar o circuito antes de realizar qualquer intervenção.",
+            "Verificar o aperto dos terminais conforme especificação do fabricante.",
+            "Utilizar ferramenta adequada para o torque recomendado.",
+            "Corrigir conexões frouxas e substituir componentes danificados."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção dos cabos e terminais",
+        description = "Verificar as condições físicas dos cabos e terminais, identificando fios rompidos, crimpagens inadequadas ou sinais de deterioração.",
+        recommendedActions = listOf(
+            "Inspecionar as extremidades dos cabos e suas conexões.",
+            "Verificar se existem fios rompidos ou desencapados.",
+            "Avaliar a qualidade da crimpagem dos terminais.",
+            "Refazer terminações inadequadas e substituir cabos danificados."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção de aquecimento nos pontos de conexão",
+        description = "Identificar possíveis pontos de aquecimento anormal provocados por resistência de contato elevada em conexões elétricas.",
+        recommendedActions = listOf(
+            "Realizar inspeção termográfica durante condições normais de operação, quando aplicável.",
+            "Identificar diferenças de temperatura entre conexões equivalentes.",
+            "Investigar pontos com aquecimento anormal.",
+            "Corrigir conexões defeituosas e verificar novamente após o reparo."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Medição de queda de tensão nas conexões",
+        description = "Avaliar a queda de tensão nos pontos de conexão para identificar possíveis resistências de contato elevadas.",
+        recommendedActions = listOf(
+            "Utilizar instrumento adequado para realizar a medição.",
+            "Verificar a queda de tensão nos pontos de conexão durante a operação.",
+            "Comparar os resultados entre conexões equivalentes.",
+            "Corrigir pontos que apresentem queda de tensão anormal."
+        )
+    )
+)
+
+// Verificações para disjuntor com defeito ou desgaste interno
+val faultyCircuitBreakerChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Inspeção visual do disjuntor",
+        description = "Verificar se o disjuntor apresenta sinais de aquecimento, deformação, carbonização ou danos externos.",
+        recommendedActions = listOf(
+            "Inspecionar a carcaça e os terminais do disjuntor.",
+            "Verificar sinais de escurecimento ou derretimento.",
+            "Avaliar possíveis danos mecânicos.",
+            "Substituir o disjuntor caso sejam identificados danos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Verificação das características nominais",
+        description = "Conferir se a corrente nominal, tensão e demais características do disjuntor correspondem às especificações do circuito.",
+        recommendedActions = listOf(
+            "Identificar os dados nominais indicados no disjuntor.",
+            "Comparar as características com o projeto elétrico.",
+            "Verificar a compatibilidade com a carga e os condutores.",
+            "Corrigir eventuais incompatibilidades conforme o projeto e as normas aplicáveis."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Investigação de disparos sem sobrecorrente identificada",
+        description = "Avaliar se o disjuntor está desarmando mesmo quando não são identificadas condições de sobrecarga ou curto-circuito.",
+        recommendedActions = listOf(
+            "Registrar as condições em que ocorrem os disparos.",
+            "Monitorar a corrente elétrica do circuito.",
+            "Verificar possíveis influências da temperatura ambiente.",
+            "Investigar a possibilidade de falha interna do disjuntor."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção dos contatos internos",
+        description = "Avaliar possíveis sinais de desgaste, deterioração ou danos nos contatos internos que possam comprometer o funcionamento do disjuntor.",
+        recommendedActions = listOf(
+            "Verificar as condições dos contatos conforme procedimento do fabricante.",
+            "Identificar sinais de desgaste ou carbonização.",
+            "Avaliar possíveis danos provocados por aquecimento excessivo.",
+            "Substituir o disjuntor quando houver comprometimento interno."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Teste de funcionamento do mecanismo de disparo",
+        description = "Verificar se o mecanismo de proteção apresenta funcionamento irregular ou disparos incompatíveis com suas características de atuação.",
+        recommendedActions = listOf(
+            "Consultar as especificações técnicas do fabricante.",
+            "Realizar testes com equipamento apropriado, quando necessário.",
+            "Verificar a atuação do mecanismo de disparo.",
+            "Substituir o disjuntor caso seja constatada falha de funcionamento."
+        )
+    )
+)
+
+// Verificações para oscilação ou desequilíbrio da tensão de alimentação
+val supplyVoltageFluctuationChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Medição da tensão de alimentação",
+        description = "Verificar se a tensão fornecida ao equipamento está de acordo com os valores nominais especificados pelo fabricante.",
+        recommendedActions = listOf(
+            "Medir a tensão entre fases e entre fase e neutro, quando aplicável.",
+            "Comparar os valores encontrados com a tensão nominal do equipamento.",
+            "Identificar possíveis subtensões ou sobretensões.",
+            "Registrar os valores medidos para análise."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Monitoramento da tensão durante a operação",
+        description = "Avaliar se ocorrem variações de tensão durante o funcionamento dos equipamentos, especialmente nos momentos de partida de motores e compressores.",
+        recommendedActions = listOf(
+            "Monitorar a tensão durante diferentes condições de operação.",
+            "Verificar possíveis quedas de tensão durante as partidas.",
+            "Identificar variações que coincidam com o desarme da proteção.",
+            "Registrar os momentos em que ocorrem as oscilações."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Análise do desequilíbrio de tensão entre fases",
+        description = "Verificar se existe diferença significativa entre as tensões das fases em sistemas trifásicos, condição que pode afetar o funcionamento dos motores.",
+        recommendedActions = listOf(
+            "Medir as tensões entre todas as fases.",
+            "Comparar os valores encontrados.",
+            "Calcular o percentual de desequilíbrio de tensão.",
+            "Investigar a origem das diferenças identificadas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção das conexões da alimentação elétrica",
+        description = "Verificar se existem conexões inadequadas na alimentação elétrica que possam provocar quedas ou oscilações de tensão.",
+        recommendedActions = listOf(
+            "Inspecionar terminais, bornes e conexões da alimentação.",
+            "Verificar sinais de aquecimento ou oxidação.",
+            "Avaliar possíveis quedas de tensão nas conexões.",
+            "Corrigir conexões defeituosas conforme as especificações técnicas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Investigação de oscilações na rede de alimentação",
+        description = "Identificar possíveis variações provenientes da rede elétrica ou de outros equipamentos conectados à mesma instalação.",
+        recommendedActions = listOf(
+            "Verificar se outros equipamentos apresentam alterações de funcionamento.",
+            "Investigar se as oscilações coincidem com partidas de grandes cargas.",
+            "Utilizar analisador de qualidade de energia, quando necessário.",
+            "Registrar as ocorrências e encaminhar problemas da rede à concessionária, quando aplicável."
+        )
+    )
+)
+
+// Verificações para falha elétrica na resistência do sistema de degelo
+val defrostHeaterElectricalFaultChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Inspeção visual das resistências",
+        description = "Verificar se as resistências elétricas de degelo apresentam danos físicos, deformações, sinais de superaquecimento ou deterioração.",
+        recommendedActions = listOf(
+            "Inspecionar visualmente as resistências de degelo.",
+            "Verificar sinais de queimadura, deformação ou rompimento.",
+            "Avaliar as condições dos terminais e conexões.",
+            "Substituir resistências que apresentem danos."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Medição da resistência elétrica",
+        description = "Medir a resistência elétrica do elemento de degelo para identificar possíveis interrupções ou alterações incompatíveis com suas características nominais.",
+        recommendedActions = listOf(
+            "Desenergizar o circuito antes da medição.",
+            "Desconectar a resistência do circuito elétrico.",
+            "Medir a resistência com um multímetro adequado.",
+            "Comparar o resultado com os valores especificados pelo fabricante."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Teste de isolamento elétrico",
+        description = "Avaliar as condições do isolamento da resistência para identificar possíveis fugas de corrente para a carcaça ou aterramento.",
+        recommendedActions = listOf(
+            "Desenergizar e desconectar a resistência do circuito.",
+            "Utilizar instrumento apropriado para o teste de isolamento.",
+            "Verificar possíveis fugas para a carcaça ou aterramento.",
+            "Comparar os resultados com as especificações do fabricante."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Inspeção das conexões elétricas do sistema de degelo",
+        description = "Verificar terminais, cabos, conectores e demais pontos de ligação da resistência em busca de mau contato, oxidação ou aquecimento.",
+        recommendedActions = listOf(
+            "Inspecionar os terminais e conectores da resistência.",
+            "Verificar sinais de oxidação ou carbonização.",
+            "Avaliar as condições dos cabos de alimentação.",
+            "Corrigir conexões defeituosas e substituir componentes danificados."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Monitoramento do consumo durante o degelo",
+        description = "Avaliar o comportamento da corrente elétrica durante o ciclo de degelo para identificar consumo anormal ou falhas de funcionamento da resistência.",
+        recommendedActions = listOf(
+            "Verificar se o ciclo de degelo ocorre normalmente.",
+            "Medir a corrente elétrica durante o funcionamento da resistência.",
+            "Comparar o consumo com os valores nominais do componente.",
+            "Investigar oscilações ou consumo incompatível com as especificações."
+        )
+    )
+)
+
+// Verificações para dimensionamento inadequado da proteção elétrica
+val improperProtectionSizingChecks = listOf(
+
+    DiagnosticCheck(
+        title = "Conferência da corrente nominal do disjuntor",
+        description = "Verificar se a corrente nominal do disjuntor está adequada à corrente de projeto e às características da carga.",
+        recommendedActions = listOf(
+            "Identificar a corrente nominal do disjuntor instalado.",
+            "Verificar a corrente de projeto do circuito.",
+            "Comparar os valores com as especificações do equipamento.",
+            "Corrigir eventuais incompatibilidades conforme o projeto elétrico."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Verificação da compatibilidade entre disjuntor e condutores",
+        description = "Avaliar se a proteção está corretamente dimensionada em relação à capacidade de condução de corrente dos cabos instalados.",
+        recommendedActions = listOf(
+            "Identificar a seção e o tipo dos condutores utilizados.",
+            "Verificar a capacidade de condução de corrente dos cabos.",
+            "Considerar os fatores de correção aplicáveis à instalação.",
+            "Verificar a coordenação entre a proteção e os condutores."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Avaliação da curva de disparo do disjuntor",
+        description = "Verificar se a curva de disparo do disjuntor é compatível com as características de partida e funcionamento das cargas conectadas.",
+        recommendedActions = listOf(
+            "Identificar a curva de disparo do disjuntor instalado.",
+            "Avaliar as correntes de partida dos motores e compressores.",
+            "Verificar a compatibilidade entre a curva de disparo e a aplicação.",
+            "Adequar a proteção conforme o projeto e as especificações técnicas."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Verificação da capacidade de interrupção",
+        description = "Conferir se a capacidade de interrupção do disjuntor é suficiente para suportar a corrente de curto-circuito presumida no ponto de instalação.",
+        recommendedActions = listOf(
+            "Identificar a capacidade de interrupção indicada no disjuntor.",
+            "Verificar a corrente de curto-circuito presumida no circuito.",
+            "Comparar os valores conforme os requisitos do projeto.",
+            "Especificar proteção compatível quando necessário."
+        )
+    ),
+
+    DiagnosticCheck(
+        title = "Análise das condições de instalação e operação",
+        description = "Avaliar se as condições reais de instalação, temperatura ambiente e agrupamento dos componentes podem influenciar o funcionamento da proteção elétrica.",
+        recommendedActions = listOf(
+            "Verificar a temperatura ambiente no local de instalação.",
+            "Avaliar possíveis influências do agrupamento de disjuntores.",
+            "Verificar as condições de ventilação do quadro elétrico.",
+            "Considerar os fatores de correção indicados pelo fabricante."
+        )
+    )
+)

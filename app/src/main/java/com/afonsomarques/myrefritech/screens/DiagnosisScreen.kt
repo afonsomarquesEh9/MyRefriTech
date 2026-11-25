@@ -84,6 +84,19 @@ fun DiagnosisScreen(
             "Infiltração intermitente de ar externo"
         )
 
+        // Disjuntor desarmando intermitentemente
+        "Disjuntor desarmando intermitentemente" -> listOf(
+            "Sobrecarga elétrica no circuito",
+            "Motor de ventilação com falha elétrica intermitente",
+            "Curto-circuito intermitente na instalação elétrica",
+            "Fuga de corrente para aterramento",
+            "Conexões elétricas frouxas ou oxidadas",
+            "Disjuntor com defeito ou desgaste interno",
+            "Oscilação ou desequilíbrio da tensão de alimentação",
+            "Resistência elétrica do sistema de degelo com falha",
+            "Dimensionamento inadequado da proteção elétrica"
+        )
+
         else -> emptyList()
     }
 

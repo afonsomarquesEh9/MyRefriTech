@@ -47,6 +47,15 @@ import com.afonsomarques.myrefritech.intermittentEvaporatorFanChecks
 import com.afonsomarques.myrefritech.defrostTemperatureVariationChecks
 import com.afonsomarques.myrefritech.thermalLoadVariationChecks
 import com.afonsomarques.myrefritech.externalAirInfiltrationChecks
+import com.afonsomarques.myrefritech.circuitOverloadChecks
+import com.afonsomarques.myrefritech.intermittentMotorElectricalChecks
+import com.afonsomarques.myrefritech.intermittentShortCircuitChecks
+import com.afonsomarques.myrefritech.groundLeakageChecks
+import com.afonsomarques.myrefritech.looseOrCorrodedConnectionsChecks
+import com.afonsomarques.myrefritech.faultyCircuitBreakerChecks
+import com.afonsomarques.myrefritech.supplyVoltageFluctuationChecks
+import com.afonsomarques.myrefritech.defrostHeaterElectricalFaultChecks
+import com.afonsomarques.myrefritech.improperProtectionSizingChecks
 @Composable
 fun InvestigationScreen(
     cause: String,
@@ -118,6 +127,24 @@ fun InvestigationScreen(
                 "Variação excessiva da carga térmica no equipamento" -> "GENERIC_CHECK"
 
                 "Infiltração intermitente de ar externo" -> "GENERIC_CHECK"
+
+                "Sobrecarga elétrica no circuito" -> "GENERIC_CHECK"
+
+                "Motor de ventilação com falha elétrica intermitente" -> "GENERIC_CHECK"
+
+                "Curto-circuito intermitente na instalação elétrica" -> "GENERIC_CHECK"
+
+                "Fuga de corrente para aterramento" -> "GENERIC_CHECK"
+
+                "Conexões elétricas frouxas ou oxidadas" -> "GENERIC_CHECK"
+
+                "Disjuntor com defeito ou desgaste interno" -> "GENERIC_CHECK"
+
+                "Oscilação ou desequilíbrio da tensão de alimentação" -> "GENERIC_CHECK"
+
+                "Resistência elétrica do sistema de degelo com falha" -> "GENERIC_CHECK"
+
+                "Dimensionamento inadequado da proteção elétrica" -> "GENERIC_CHECK"
 
                 else -> "INITIAL_QUESTION"
             }
@@ -206,6 +233,34 @@ fun InvestigationScreen(
 
         "Infiltração intermitente de ar externo" ->
             externalAirInfiltrationChecks
+
+        // Disjuntor desarmando intermitentemente
+        "Sobrecarga elétrica no circuito" ->
+            circuitOverloadChecks
+
+        "Motor de ventilação com falha elétrica intermitente" ->
+            intermittentMotorElectricalChecks
+
+        "Curto-circuito intermitente na instalação elétrica" ->
+            intermittentShortCircuitChecks
+
+        "Fuga de corrente para aterramento" ->
+            groundLeakageChecks
+
+        "Conexões elétricas frouxas ou oxidadas" ->
+            looseOrCorrodedConnectionsChecks
+
+        "Disjuntor com defeito ou desgaste interno" ->
+            faultyCircuitBreakerChecks
+
+        "Oscilação ou desequilíbrio da tensão de alimentação" ->
+            supplyVoltageFluctuationChecks
+
+        "Resistência elétrica do sistema de degelo com falha" ->
+            defrostHeaterElectricalFaultChecks
+
+        "Dimensionamento inadequado da proteção elétrica" ->
+            improperProtectionSizingChecks
 
         else -> emptyList()
     }

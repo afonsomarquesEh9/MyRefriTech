@@ -31,7 +31,8 @@ import com.afonsomarques.myrefritech.screens.SymptomScreen
 import com.afonsomarques.myrefritech.screens.DiagnosisScreen
 import android.net.Uri
 import com.afonsomarques.myrefritech.screens.InvestigationScreen
-
+import com.afonsomarques.myrefritech.screens.ControllerScreen
+import com.afonsomarques.myrefritech.screens.PdfViewerScreen
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,8 +73,7 @@ class MainActivity : ComponentActivity() {
                                         "Sistema Rack" ->
                                             navController.navigate("rack")
 
-                                        "Balcão expositor horizontal",
-                                        "Balcão expositor vertical",
+                                        "Balcão expositor de resfriados",
                                         "Balcão expositor de congelados" ->
                                             navController.navigate("symptoms/${Uri.encode(equipment)}")
 
@@ -126,17 +126,44 @@ class MainActivity : ComponentActivity() {
                                     navController.popBackStack()
                                 },
                                 onSymptomSelected = { symptom ->
-                                    // O destino de diagnóstico lê estes dados da entrada anterior,
-                                    // preservando o argumento fora da URL de navegação.
-                                    navController.getBackStackEntry("symptoms/{equipment}")
-                                        .savedStateHandle
-                                        .set("selected_symptom", symptom)
 
-                                    navController.getBackStackEntry("symptoms/{equipment}")
-                                        .savedStateHandle
-                                        .set("selected_equipment", equipment)
+                                    if (symptom == "Alarme no controlador eletrônico") {
 
-                                    navController.navigate("diagnosis")
+                                        navController.navigate("controllers")
+
+                                    } else {
+
+                                        navController.getBackStackEntry("symptoms/{equipment}")
+                                            .savedStateHandle
+                                            .set("selected_symptom", symptom)
+
+                                        navController.getBackStackEntry("symptoms/{equipment}")
+                                            .savedStateHandle
+                                            .set("selected_equipment", equipment)
+
+                                        navController.navigate("diagnosis")
+                                    }
+                                }
+
+
+                            )
+                        }
+
+                        composable("controllers") {
+                            ControllerScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                },
+                                onManualClick = {
+                                    navController.navigate("pdf_manual")
+                                }
+                            )
+                        }
+
+                        composable("pdf_manual") {
+                            PdfViewerScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
                                 }
                             )
                         }
@@ -239,9 +266,7 @@ fun EquipmentScreen(
 
         EquipmentButton("Sistema Rack", onEquipmentSelected)
 
-        EquipmentButton("Balcão expositor horizontal", onEquipmentSelected)
-
-        EquipmentButton("Balcão expositor vertical", onEquipmentSelected)
+        EquipmentButton("Balcão expositor de resfriados", onEquipmentSelected)
 
         EquipmentButton("Balcão expositor de congelados", onEquipmentSelected)
 
