@@ -30,6 +30,7 @@ fun SymptomScreen(
         "Congelamento/bloqueio do evaporador ou obstrução da passagem do ar",
         "Temperatura de insuflamento oscilando",
         "Disjuntor desarmando intermitentemente",
+        "O balcão não refrigera",
         "Alarme no controlador eletrônico"
     )
 

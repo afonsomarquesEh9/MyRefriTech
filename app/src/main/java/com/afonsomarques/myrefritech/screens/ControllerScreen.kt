@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,7 +26,7 @@ import com.afonsomarques.myrefritech.R
 @Composable
 fun ControllerScreen(
     onBackClick: () -> Unit,
-    onManualClick: () -> Unit
+    onControllerSelected: () -> Unit
 ) {
 
     Column(
@@ -48,7 +47,7 @@ fun ControllerScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "Selecione o controlador para consultar seu manual técnico.",
+            text = "Selecione o controlador para consultar sua referência técnica.",
             fontSize = 16.sp,
             textAlign = TextAlign.Center
         )
@@ -56,7 +55,9 @@ fun ControllerScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Card(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onControllerSelected),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             )
@@ -75,9 +76,6 @@ fun ControllerScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
-                        .clickable {
-                            onManualClick()
-                        }
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -95,11 +93,6 @@ fun ControllerScreen(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(
-                    text = "Toque na imagem para acessar o manual técnico.",
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center
-                )
             }
         }
 

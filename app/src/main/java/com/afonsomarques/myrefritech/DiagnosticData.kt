@@ -1931,3 +1931,220 @@ val improperProtectionSizingChecks = listOf(
         )
     )
 )
+
+// Verificações para balcão sem refrigeração em sistema Rack
+val solenoidCoilFaultChecks = listOf(
+    DiagnosticCheck(
+        title = "Condição física e instalação da bobina",
+        description = "Avaliar a integridade física e a instalação da bobina da válvula solenoide.",
+        recommendedActions = listOf(
+            "Verificar se a bobina apresenta sinais de superaquecimento, queimaduras, deformação ou danos físicos.",
+            "Verificar se a bobina está corretamente instalada e encaixada no corpo da válvula.",
+            "Confirmar se a bobina corresponde à tensão de alimentação especificada."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Atuação magnética e condição elétrica",
+        description = "Confirmar se a bobina atua corretamente quando energizada.",
+        recommendedActions = listOf(
+            "Verificar se existe atuação magnética quando a bobina é energizada.",
+            "Medir a resistência elétrica da bobina e comparar com os valores especificados pelo fabricante.",
+            "Verificar se a bobina apresenta circuito aberto ou curto-circuito."
+        )
+    )
+)
+
+val solenoidValveMechanicalFaultChecks = listOf(
+    DiagnosticCheck(
+        title = "Comando e energização da válvula",
+        description = "Confirmar se a válvula solenoide recebe o comando necessário durante a demanda de refrigeração.",
+        recommendedActions = listOf(
+            "Verificar se a válvula recebe comando para abertura durante a solicitação de refrigeração.",
+            "Confirmar se a bobina está energizada durante a demanda de refrigeração.",
+            "Verificar se ocorre atuação mecânica da válvula quando energizada."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Passagem de refrigerante",
+        description = "Avaliar a abertura interna e a passagem de refrigerante pela válvula.",
+        recommendedActions = listOf(
+            "Verificar se o mecanismo interno está travado ou impedido de abrir.",
+            "Verificar se há indícios de obstrução interna da válvula.",
+            "Confirmar se existe passagem de refrigerante através da válvula quando aberta."
+        )
+    )
+)
+
+val filterDrierOrDistributorObstructionChecks = listOf(
+    DiagnosticCheck(
+        title = "Restrição no filtro secador",
+        description = "Investigar possíveis restrições no filtro secador.",
+        recommendedActions = listOf(
+            "Verificar a existência de diferença de temperatura entre a entrada e a saída do filtro secador.",
+            "Verificar se há indícios de restrição no filtro secador.",
+            "Inspecionar o filtro secador quanto a sinais de congelamento ou formação anormal de gelo."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Alimentação do distribuidor",
+        description = "Avaliar a alimentação de refrigerante e possíveis restrições no distribuidor.",
+        recommendedActions = listOf(
+            "Verificar a presença de restrição na entrada ou saída do distribuidor.",
+            "Verificar se a alimentação de refrigerante está chegando adequadamente ao distribuidor.",
+            "Avaliar se há sinais de alimentação irregular dos circuitos do evaporador."
+        )
+    )
+)
+
+val expansionValveFailureChecks = listOf(
+    DiagnosticCheck(
+        title = "Passagem e abertura da válvula de expansão",
+        description = "Avaliar se a válvula de expansão permite a passagem adequada de refrigerante.",
+        recommendedActions = listOf(
+            "Verificar se a válvula de expansão está permitindo a passagem de refrigerante.",
+            "Verificar se há sinais de válvula travada fechada ou com abertura insuficiente.",
+            "Avaliar se a válvula apresenta sinais de obstrução ou funcionamento irregular."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Bulbo e equalização da válvula",
+        description = "Inspecionar os elementos de controle da válvula de expansão, quando aplicável.",
+        recommendedActions = listOf(
+            "Inspecionar o bulbo termostático quanto à fixação e posicionamento, quando aplicável.",
+            "Verificar o isolamento térmico do bulbo.",
+            "Verificar se há danos ou perda de carga no elemento termostático.",
+            "Verificar a equalização da válvula, quando aplicável."
+        )
+    )
+)
+
+val faultyElectronicControllerChecks = listOf(
+    DiagnosticCheck(
+        title = "Funcionamento e comandos do controlador",
+        description = "Confirmar que o controlador está operando e solicitando refrigeração corretamente.",
+        recommendedActions = listOf(
+            "Verificar se o controlador está energizado e funcionando normalmente.",
+            "Verificar se há alarmes ou mensagens de erro no display.",
+            "Confirmar se o controlador está solicitando refrigeração.",
+            "Verificar se a saída de refrigeração está sendo acionada quando necessário."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Saída e configuração do controlador",
+        description = "Avaliar a saída de comando, a configuração e a integridade do controlador.",
+        recommendedActions = listOf(
+            "Verificar se o relé ou saída de comando apresenta funcionamento irregular.",
+            "Confirmar se as configurações do controlador estão coerentes com a aplicação.",
+            "Verificar se há sinais de danos físicos ou falhas internas no controlador."
+        )
+    )
+)
+
+val faultyTemperatureSensorChecks = listOf(
+    DiagnosticCheck(
+        title = "Leitura, integridade e posicionamento do sensor",
+        description = "Confirmar que o sensor mede corretamente a temperatura do balcão.",
+        recommendedActions = listOf(
+            "Verificar se a temperatura indicada pelo controlador corresponde aproximadamente à temperatura real do balcão.",
+            "Inspecionar o sensor quanto a danos físicos.",
+            "Verificar o posicionamento do sensor.",
+            "Verificar se o sensor está corretamente conectado ao controlador."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Medição elétrica e conexões do sensor",
+        description = "Avaliar as características elétricas e a fiação do sensor.",
+        recommendedActions = listOf(
+            "Medir a resistência elétrica do sensor e comparar com a tabela do fabricante.",
+            "Verificar se o sensor apresenta circuito aberto, curto-circuito ou valores inconsistentes.",
+            "Verificar a integridade dos cabos e conexões do sensor."
+        )
+    )
+)
+
+val incorrectSetpointChecks = listOf(
+    DiagnosticCheck(
+        title = "Conferência do setpoint",
+        description = "Verificar se a temperatura configurada atende à aplicação do balcão.",
+        recommendedActions = listOf(
+            "Verificar a temperatura configurada no controlador.",
+            "Comparar o setpoint configurado com a temperatura desejada para o produto e aplicação.",
+            "Verificar se o setpoint está acima da temperatura atual do balcão."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Modo e parâmetros de operação",
+        description = "Confirmar o modo de operação e a consistência dos parâmetros configurados.",
+        recommendedActions = listOf(
+            "Confirmar se o controlador está configurado no modo correto de operação.",
+            "Verificar se houve alteração inadvertida dos parâmetros de temperatura.",
+            "Confirmar se a configuração está de acordo com os parâmetros operacionais definidos."
+        )
+    )
+)
+
+val solenoidCoilPowerFailureChecks = listOf(
+    DiagnosticCheck(
+        title = "Medição da alimentação da bobina",
+        description = "Confirmar a presença e a compatibilidade da tensão de alimentação da bobina.",
+        recommendedActions = listOf(
+            "Verificar se existe tensão de alimentação disponível para a bobina.",
+            "Medir a tensão nos terminais da bobina durante a solicitação de refrigeração.",
+            "Comparar a tensão medida com a tensão nominal da bobina.",
+            "Verificar se a alimentação está sendo interrompida durante a operação."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Circuito elétrico da bobina",
+        description = "Investigar possíveis perdas ou interrupções no circuito de alimentação da bobina.",
+        recommendedActions = listOf(
+            "Inspecionar cabos e conexões elétricas da alimentação da bobina.",
+            "Verificar se há queda de tensão excessiva no circuito.",
+            "Confirmar se a alimentação elétrica está chegando corretamente à bobina."
+        )
+    )
+)
+
+val kvpValveFailureChecks = listOf(
+    DiagnosticCheck(
+        title = "Aplicação e ajuste da válvula KVP",
+        description = "Confirmar a presença e o ajuste adequado da válvula KVP, quando aplicável.",
+        recommendedActions = listOf(
+            "Verificar se a válvula KVP está instalada no circuito correspondente.",
+            "Verificar o ajuste de pressão da válvula.",
+            "Confirmar se o ajuste está de acordo com as condições de operação previstas."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Funcionamento da válvula KVP",
+        description = "Avaliar se a KVP interfere no funcionamento do evaporador.",
+        recommendedActions = listOf(
+            "Verificar se a válvula apresenta sinais de travamento ou funcionamento irregular.",
+            "Avaliar a pressão de evaporação durante a operação.",
+            "Verificar se a atuação da KVP está interferindo nas condições de funcionamento do evaporador.",
+            "Confirmar se há passagem adequada de refrigerante através da válvula."
+        )
+    )
+)
+
+val localElectricalOrControlProblemsChecks = listOf(
+    DiagnosticCheck(
+        title = "Instalação e continuidade do circuito",
+        description = "Inspecionar a integridade elétrica do circuito local de refrigeração do balcão.",
+        recommendedActions = listOf(
+            "Inspecionar a instalação elétrica do circuito de refrigeração do balcão.",
+            "Verificar conexões frouxas, oxidadas ou com sinais de aquecimento.",
+            "Verificar a continuidade dos cabos de comando.",
+            "Verificar possíveis interrupções na fiação."
+        )
+    ),
+    DiagnosticCheck(
+        title = "Comando e falhas intermitentes",
+        description = "Confirmar que o comando chega corretamente ao componente acionado.",
+        recommendedActions = listOf(
+            "Verificar a atuação dos relés e componentes de comando envolvidos.",
+            "Confirmar se o sinal de comando chega corretamente ao componente acionado.",
+            "Verificar se há falhas intermitentes no circuito elétrico."
+        )
+    )
+)

@@ -84,6 +84,19 @@ fun DiagnosisScreen(
             "Infiltração intermitente de ar externo"
         )
 
+        "O balcão não refrigera" -> listOf(
+            "Bobina da válvula solenoide avariada",
+            "Válvula solenoide com falha mecânica",
+            "Obstrução do filtro secador ou distribuidor",
+            "Avaria da válvula de expansão",
+            "Controlador eletrônico avariado",
+            "Sensor de temperatura avariado",
+            "Setpoint incorreto",
+            "Falha de alimentação da bobina solenoide",
+            "Falha na válvula KVP, quando aplicável",
+            "Problemas elétricos ou de comando"
+        )
+
         // Disjuntor desarmando intermitentemente
         "Disjuntor desarmando intermitentemente" -> listOf(
             "Sobrecarga elétrica no circuito",
@@ -175,6 +188,7 @@ fun DiagnosisScreen(
                             Text(
                                 text = cause,
                                 fontSize = 16.sp,
+                                color = Color(0xFF263238),
                                 modifier = Modifier.weight(1f)
                             )
 
@@ -221,7 +235,7 @@ fun DiagnosisScreen(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = Color.White
+                contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
             Text("Voltar")

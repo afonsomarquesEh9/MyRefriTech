@@ -33,6 +33,15 @@ import android.net.Uri
 import com.afonsomarques.myrefritech.screens.InvestigationScreen
 import com.afonsomarques.myrefritech.screens.ControllerScreen
 import com.afonsomarques.myrefritech.screens.PdfViewerScreen
+import com.afonsomarques.myrefritech.screens.CarelEasyReferenceScreen
+import com.afonsomarques.myrefritech.screens.CarelEasyAlarmsScreen
+import com.afonsomarques.myrefritech.screens.CarelEasyParametersScreen
+import com.afonsomarques.myrefritech.screens.CarelEasyParameterAccessScreen
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.delay
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,14 +59,29 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "home",
+                        startDestination = "splash",
                         modifier = Modifier.padding(innerPadding)
                     ) {
+
+                        composable("splash") {
+                            SplashScreen(
+                                onFinished = {
+                                    navController.navigate("home") {
+                                        popUpTo("splash") {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            )
+                        }
 
                         composable("home") {
                             HomeScreen(
                                 onDiagnosticClick = {
                                     navController.navigate("equipment")
+                                },
+                                onControllersClick = {
+                                    navController.navigate("controllers")
                                 }
                             )
                         }
@@ -154,8 +178,52 @@ class MainActivity : ComponentActivity() {
                                 onBackClick = {
                                     navController.popBackStack()
                                 },
+                                onControllerSelected = {
+                                    navController.navigate("carel_easy")
+                                }
+                            )
+                        }
+
+                        composable("carel_easy") {
+                            CarelEasyReferenceScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                },
                                 onManualClick = {
                                     navController.navigate("pdf_manual")
+                                },
+                                onAlarmsClick = {
+                                    navController.navigate("carel_easy_alarms")
+                                },
+                                onParametersClick = {
+                                    navController.navigate("carel_easy_parameter_access")
+                                }
+                            )
+                        }
+
+                        composable("carel_easy_alarms") {
+                            CarelEasyAlarmsScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+
+                        composable("carel_easy_parameter_access") {
+                            CarelEasyParameterAccessScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                },
+                                onContinueClick = {
+                                    navController.navigate("carel_easy_parameters")
+                                }
+                            )
+                        }
+
+                        composable("carel_easy_parameters") {
+                            CarelEasyParametersScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
                                 }
                             )
                         }
@@ -405,4 +473,21 @@ fun RefrigerationScreen(
             Text(text = "Voltar")
         }
     }
+}
+
+@Composable
+fun SplashScreen(
+    onFinished: () -> Unit
+) {
+    LaunchedEffect(Unit) {
+        delay(3500)
+        onFinished()
+    }
+
+    Image(
+        painter = painterResource(id = R.drawable.splash_screen),
+        contentDescription = "MyRefriTech - Diagnóstico em refrigeração comercial",
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop
+    )
 }

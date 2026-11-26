@@ -56,6 +56,16 @@ import com.afonsomarques.myrefritech.faultyCircuitBreakerChecks
 import com.afonsomarques.myrefritech.supplyVoltageFluctuationChecks
 import com.afonsomarques.myrefritech.defrostHeaterElectricalFaultChecks
 import com.afonsomarques.myrefritech.improperProtectionSizingChecks
+import com.afonsomarques.myrefritech.solenoidCoilFaultChecks
+import com.afonsomarques.myrefritech.solenoidValveMechanicalFaultChecks
+import com.afonsomarques.myrefritech.filterDrierOrDistributorObstructionChecks
+import com.afonsomarques.myrefritech.expansionValveFailureChecks
+import com.afonsomarques.myrefritech.faultyElectronicControllerChecks
+import com.afonsomarques.myrefritech.faultyTemperatureSensorChecks
+import com.afonsomarques.myrefritech.incorrectSetpointChecks
+import com.afonsomarques.myrefritech.solenoidCoilPowerFailureChecks
+import com.afonsomarques.myrefritech.kvpValveFailureChecks
+import com.afonsomarques.myrefritech.localElectricalOrControlProblemsChecks
 @Composable
 fun InvestigationScreen(
     cause: String,
@@ -127,6 +137,26 @@ fun InvestigationScreen(
                 "Variação excessiva da carga térmica no equipamento" -> "GENERIC_CHECK"
 
                 "Infiltração intermitente de ar externo" -> "GENERIC_CHECK"
+
+                "Bobina da válvula solenoide avariada" -> "GENERIC_CHECK"
+
+                "Válvula solenoide com falha mecânica" -> "GENERIC_CHECK"
+
+                "Obstrução do filtro secador ou distribuidor" -> "GENERIC_CHECK"
+
+                "Avaria da válvula de expansão" -> "GENERIC_CHECK"
+
+                "Controlador eletrônico avariado" -> "GENERIC_CHECK"
+
+                "Sensor de temperatura avariado" -> "GENERIC_CHECK"
+
+                "Setpoint incorreto" -> "GENERIC_CHECK"
+
+                "Falha de alimentação da bobina solenoide" -> "GENERIC_CHECK"
+
+                "Falha na válvula KVP, quando aplicável" -> "GENERIC_CHECK"
+
+                "Problemas elétricos ou de comando" -> "GENERIC_CHECK"
 
                 "Sobrecarga elétrica no circuito" -> "GENERIC_CHECK"
 
@@ -233,6 +263,36 @@ fun InvestigationScreen(
 
         "Infiltração intermitente de ar externo" ->
             externalAirInfiltrationChecks
+
+        "Bobina da válvula solenoide avariada" ->
+            solenoidCoilFaultChecks
+
+        "Válvula solenoide com falha mecânica" ->
+            solenoidValveMechanicalFaultChecks
+
+        "Obstrução do filtro secador ou distribuidor" ->
+            filterDrierOrDistributorObstructionChecks
+
+        "Avaria da válvula de expansão" ->
+            expansionValveFailureChecks
+
+        "Controlador eletrônico avariado" ->
+            faultyElectronicControllerChecks
+
+        "Sensor de temperatura avariado" ->
+            faultyTemperatureSensorChecks
+
+        "Setpoint incorreto" ->
+            incorrectSetpointChecks
+
+        "Falha de alimentação da bobina solenoide" ->
+            solenoidCoilPowerFailureChecks
+
+        "Falha na válvula KVP, quando aplicável" ->
+            kvpValveFailureChecks
+
+        "Problemas elétricos ou de comando" ->
+            localElectricalOrControlProblemsChecks
 
         // Disjuntor desarmando intermitentemente
         "Sobrecarga elétrica no circuito" ->
@@ -371,21 +431,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -408,12 +471,17 @@ fun InvestigationScreen(
                                             selected = checkResults[index] == status,
                                             onClick = {
                                                 checkResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -533,7 +601,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -543,6 +612,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -614,21 +684,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -651,12 +724,17 @@ fun InvestigationScreen(
                                             selected = individualCheckResults[index] == status,
                                             onClick = {
                                                 individualCheckResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -776,7 +854,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -786,6 +865,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -887,21 +967,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -924,12 +1007,17 @@ fun InvestigationScreen(
                                             selected = checkResults[index] == status,
                                             onClick = {
                                                 checkResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -992,21 +1080,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -1029,12 +1120,17 @@ fun InvestigationScreen(
                                             selected = checkResults[index] == status,
                                             onClick = {
                                                 checkResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -1097,21 +1193,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -1134,12 +1233,17 @@ fun InvestigationScreen(
                                             selected = checkResults[index] == status,
                                             onClick = {
                                                 checkResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -1157,7 +1261,7 @@ fun InvestigationScreen(
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.primary,
-                                contentColor = Color.White
+                                contentColor = MaterialTheme.colorScheme.onPrimary
                             )
                         ) {
                             Text("Concluir verificações")
@@ -1273,7 +1377,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -1283,6 +1388,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -1351,21 +1457,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -1387,12 +1496,17 @@ fun InvestigationScreen(
                                             selected = checkResults[index] == status,
                                             onClick = {
                                                 checkResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -1454,21 +1568,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -1491,12 +1608,17 @@ fun InvestigationScreen(
                                             selected = individualCheckResults[index] == status,
                                             onClick = {
                                                 individualCheckResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -1556,21 +1678,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -1592,12 +1717,17 @@ fun InvestigationScreen(
                                             selected = checkResults[index] == status,
                                             onClick = {
                                                 checkResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -1656,21 +1786,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -1692,12 +1825,17 @@ fun InvestigationScreen(
                                             selected = checkResults[index] == status,
                                             onClick = {
                                                 checkResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -1816,7 +1954,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -1826,6 +1965,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -1948,7 +2088,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -1957,6 +2098,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -2078,7 +2220,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -2087,6 +2230,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -2214,7 +2358,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -2224,6 +2369,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -2363,7 +2509,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -2373,6 +2520,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -2495,7 +2643,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -2504,6 +2653,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -2574,21 +2724,24 @@ fun InvestigationScreen(
                                 Text(
                                     text = "${index + 1}. ${check.title}",
                                     fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
                                     text = check.description,
-                                    fontSize = 14.sp
+                                    fontSize = 14.sp,
+                                    color = Color(0xFF455A64)
                                 )
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
                                 Text(
                                     text = "Resultado da verificação:",
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color(0xFF263238)
                                 )
 
                                 listOf(
@@ -2611,12 +2764,17 @@ fun InvestigationScreen(
                                             selected = checkResults[index] == status,
                                             onClick = {
                                                 checkResults[index] = status
-                                            }
+                                            },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF263238),
+                                                unselectedColor = Color(0xFF455A64)
+                                            )
                                         )
 
                                         Text(
                                             text = status,
-                                            fontSize = 14.sp
+                                            fontSize = 14.sp,
+                                            color = Color(0xFF263238)
                                         )
                                     }
                                 }
@@ -2736,7 +2894,8 @@ fun InvestigationScreen(
                                     Text(
                                         text = check.title,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF263238)
                                     )
 
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -2746,6 +2905,7 @@ fun InvestigationScreen(
                                         Text(
                                             text = "• $action",
                                             fontSize = 14.sp,
+                                            color = Color(0xFF455A64),
                                             modifier = Modifier.padding(vertical = 3.dp)
                                         )
                                     }
@@ -2820,7 +2980,7 @@ fun InvestigationScreen(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = Color.White
+                contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
             Text("Voltar às possíveis causas")

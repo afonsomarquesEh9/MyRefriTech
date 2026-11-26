@@ -20,7 +20,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun HomeScreen(
-    onDiagnosticClick: () -> Unit
+    onDiagnosticClick: () -> Unit,
+    onControllersClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -60,6 +61,15 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Diagnóstico guiado")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = onControllersClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Controladores")
         }
 
         Spacer(modifier = Modifier.height(12.dp))
